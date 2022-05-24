@@ -1,4 +1,4 @@
-package com.hasnarof.hargain
+package com.bangkit.hargain
 
 import org.junit.Test
 

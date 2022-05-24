@@ -1,4 +1,4 @@
-package com.hasnarof.hargain.presentation.common.extension
+package com.bangkit.hargain.presentation.common.extension
 
 import android.view.View
 

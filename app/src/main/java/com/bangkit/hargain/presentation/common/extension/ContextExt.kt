@@ -1,9 +1,9 @@
-package com.hasnarof.hargain.presentation.common.extension
+package com.bangkit.hargain.presentation.common.extension
 
 import android.app.AlertDialog
 import android.content.Context
 import android.widget.Toast
-import com.hasnarof.hargain.R
+import com.bangkit.hargain.R
 
 fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

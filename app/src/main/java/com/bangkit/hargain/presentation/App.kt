@@ -1,4 +1,4 @@
-package com.hasnarof.hargain.presentation
+package com.bangkit.hargain.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

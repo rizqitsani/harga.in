@@ -1,4 +1,4 @@
-package com.hasnarof.hargain.domain.common.base
+package com.bangkit.hargain.domain.common.base
 
 sealed class BaseResult <out T: Any, out U: Any> {
     data class Success <T: Any>(val data: T): BaseResult<T, Nothing>()

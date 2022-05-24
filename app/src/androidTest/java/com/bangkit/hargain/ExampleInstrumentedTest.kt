@@ -1,4 +1,4 @@
-package com.hasnarof.hargain
+package com.bangkit.hargain
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.hasnarof.hargain", appContext.packageName)
+        assertEquals("com.bangkit.hargain", appContext.packageName)
     }
 }

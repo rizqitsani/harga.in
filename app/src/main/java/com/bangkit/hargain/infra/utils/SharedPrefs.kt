@@ -1,4 +1,4 @@
-package com.hasnarof.hargain.infra.utils
+package com.bangkit.hargain.infra.utils
 
 import android.content.Context
 import android.content.SharedPreferences

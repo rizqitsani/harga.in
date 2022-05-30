@@ -1,5 +1,6 @@
 package com.bangkit.hargain
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -11,16 +12,23 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.bangkit.hargain.databinding.ActivityMainBinding
+import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.common.extension.TAG
+import com.bangkit.hargain.presentation.login.ui.login.LoginActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import kotlin.math.sign
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val db = Firebase.firestore
+    @Inject
+    lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +41,27 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+    override fun onStart() {
+        super.onStart()
+        checkIsLoggedIn()
+    }
+
+    private fun checkIsLoggedIn() {
+        if (sharedPrefs.getToken().isEmpty()) {
+            goToLoginActivity()
         }
+    }
 
-        test()
+    private fun goToLoginActivity() {
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        finish()
+    }
+
+    private fun signOut() {
+        sharedPrefs.clear()
+        goToLoginActivity()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +75,10 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_signout -> {
+                signOut()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -64,16 +89,4 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    private fun test() {
-        val city = hashMapOf(
-            "name" to "Los Angeles",
-            "state" to "CA",
-            "country" to "USA"
-        )
-
-        db.collection("cities").document("LA")
-            .set(city)
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-    }
 }

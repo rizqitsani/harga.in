@@ -22,4 +22,16 @@
     <string name="title_activity_login">LoginActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="title_search">Search</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_home">Home</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_price">Rp.XXXXXX</string>
+    <string name="kategori">Kategori</string>
+    <string name="edit_product">Ubah Produk</string>
+    <string name="nama">Nama</string>
+    <string name="sign_out">sign out</string>
+    <string name="product_picture">Product Picture</string>
 </resources>

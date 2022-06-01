@@ -38,6 +38,7 @@
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textSize="20dp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -50,6 +51,7 @@
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textSize="26dp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintEnd_toEndOf="@+id/productName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/productName"
@@ -63,6 +65,7 @@
         android:text="@string/kategori"
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintStart_toStartOf="@id/price"
         app:layout_constraintTop_toBottomOf="@id/price" />
 
@@ -74,6 +77,7 @@
         android:text="Deskripsi"
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintEnd_toEndOf="@+id/textKategori"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textKategori"
@@ -86,6 +90,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
         android:text="Deskripsi"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textDescription"
@@ -95,12 +100,13 @@
         android:id="@+id/tvMerk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:text="TextView"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/merk"
         app:layout_constraintBottom_toBottomOf="@+id/textMerk"
-        app:layout_constraintStart_toEndOf="@+id/textMerk"
+
+        app:layout_constraintStart_toStartOf="@+id/tvDescription"
         app:layout_constraintTop_toTopOf="@+id/textMerk"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textMerk"
@@ -110,6 +116,7 @@
         android:text="Merk"
         android:textAppearance="@android:style/TextAppearance.Material"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintEnd_toEndOf="@+id/textDescription"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textDescription"
@@ -121,6 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:text="@string/kategori"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintBottom_toBottomOf="@+id/textKategori"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.019"
@@ -134,6 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:text="@string/edit_product"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"

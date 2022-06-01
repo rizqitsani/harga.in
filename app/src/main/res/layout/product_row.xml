@@ -44,6 +44,7 @@
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:fontFamily="@font/poppins_bold"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toEndOf="@+id/imageProduct"

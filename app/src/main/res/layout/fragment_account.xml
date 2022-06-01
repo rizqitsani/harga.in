@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="680dp"
         app:menu="@menu/bottom_nav_menu"
-
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -38,6 +38,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="32dp"
         android:text="@string/nama"
+        android:fontFamily="@font/poppins_bold"
         android:textAppearance="@android:style/TextAppearance.Material"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -48,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:text="@string/nama"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintStart_toEndOf="@+id/textNama"
         app:layout_constraintTop_toTopOf="@+id/textNama" />
 
@@ -58,6 +60,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/username"
         android:textAppearance="@android:style/TextAppearance.Material"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintStart_toStartOf="@+id/textNama"
         app:layout_constraintTop_toBottomOf="@+id/textNama" />
 
@@ -66,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username"
-
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintStart_toStartOf="@+id/textViewNama"
         app:layout_constraintTop_toTopOf="@+id/textUsername" />
 

@@ -8,6 +8,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="680dp"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_nav_menu"/>
 
 </FrameLayout>

@@ -11,10 +11,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.bangkit.hargain.databinding.ActivityMainBinding
 import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.common.extension.TAG
-import com.bangkit.hargain.presentation.login.ui.login.LoginActivity
+import com.bangkit.hargain.presentation.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var auth: FirebaseAuth
 
     @Inject
     lateinit var sharedPrefs: SharedPrefs
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
     }
 
     override fun onStart() {

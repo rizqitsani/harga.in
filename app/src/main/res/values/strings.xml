@@ -35,4 +35,7 @@
     <string name="sign_out">sign out</string>
     <string name="product_picture">Product Picture</string>
     <string name="merk">Merk</string>
+    <string name="email">Email</string>
+    <string name="error_email_not_valid">Email not valid</string>
+    <string name="error_password_not_valid">Password not valid</string>
 </resources>

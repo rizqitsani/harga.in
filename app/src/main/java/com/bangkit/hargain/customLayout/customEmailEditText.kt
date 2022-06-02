@@ -52,7 +52,7 @@ class customEmailEditText : AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "email"
+        hint = "Email"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 }

@@ -1,28 +1,26 @@
 package com.bangkit.hargain.presentation.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityLoginBinding
-import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.common.extension.TAG
 import com.bangkit.hargain.presentation.common.extension.isEmail
+import com.bangkit.hargain.presentation.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
-
-    @Inject
-    lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,28 +32,22 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         binding.loginButton.setOnClickListener {
-            Log.d(TAG, "clicked:success")
-
             val email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
+
             if(validate(email, password)){
-//                val loginRequest = LoginRequest(email, password)
-//                viewModel.login(loginRequest)
+                handleLoading(true)
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success")
+                            handleLoading(false)
                             Toast.makeText(baseContext, "Authentication success.",
                                 Toast.LENGTH_SHORT).show()
-                            val user = auth.currentUser
-//                            updateUI(user)
+                            goToMainActivity()
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
                             Toast.makeText(baseContext, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
-//                            updateUI(null)
                         }
                     }
             }
@@ -88,5 +80,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setPasswordError(e: String?){
 //        binding.passwordEditText.error = e
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun goToMainActivity(){
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 }

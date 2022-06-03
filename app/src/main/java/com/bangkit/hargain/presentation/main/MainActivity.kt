@@ -1,19 +1,23 @@
-package com.bangkit.hargain.presentation.main.home
+package com.bangkit.hargain.presentation.main
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityMainBinding
 import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,11 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     private lateinit var auth: FirebaseAuth
-
-    @Inject
-    lateinit var sharedPrefs: SharedPrefs
+    var currentUser : FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +37,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        auth = FirebaseAuth.getInstance()
+        currentUser = auth.currentUser
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        setSupportActionBar(binding.toolbar) // TODO ini dikemanain toolbarnya
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -48,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkIsLoggedIn() {
-        if (sharedPrefs.getToken().isEmpty()) {
+        if (currentUser === null) {
             goToLoginActivity()
         }
     }
@@ -59,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
-        sharedPrefs.clear()
+        auth.signOut()
         goToLoginActivity()
     }
 
@@ -83,7 +91,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }

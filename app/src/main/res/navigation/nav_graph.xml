@@ -3,26 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
+    app:startDestination="@id/homeMainFragment">
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.bangkit.hargain.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/homeMainFragment"
+        android:name="com.bangkit.hargain.presentation.main.home.HomeMainFragment"
+        android:label="fragment_home_main"
+        tools:layout="@layout/fragment_home_main" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_homeMainFragment_to_mainSearchFragment"
+            app:destination="@id/mainSearchFragment" />
+        <action
+            android:id="@+id/action_homeMainFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.bangkit.hargain.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        android:id="@+id/mainSearchFragment"
+        android:name="com.bangkit.hargain.presentation.main.mainmenu.mainsearch.MainSearchFragment"
+        android:label="fragment_main_search"
+        tools:layout="@layout/fragment_main_search" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.bangkit.hargain.presentation.main.mainmenu.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>

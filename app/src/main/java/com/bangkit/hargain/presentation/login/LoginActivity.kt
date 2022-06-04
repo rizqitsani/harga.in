@@ -1,34 +1,93 @@
 package com.bangkit.hargain.presentation.login
 
-import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.annotation.StringRes
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.Toast
+import com.bangkit.hargain.R
+import com.bangkit.hargain.databinding.ActivityLoginBinding
+import com.bangkit.hargain.presentation.common.extension.TAG
+import com.bangkit.hargain.presentation.common.extension.isEmail
+import com.bangkit.hargain.presentation.main.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-}
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var auth: FirebaseAuth
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable?) {
-            afterTextChanged.invoke(editable.toString())
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        auth = Firebase.auth
+        login()
+    }
+
+    private fun login() {
+        binding.loginButton.setOnClickListener {
+            val email = binding.emailEditText.text.toString().trim()
+            val password = binding.passwordEditText.text.toString().trim()
+
+            if(validate(email, password)){
+                handleLoading(true)
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            handleLoading(false)
+                            Toast.makeText(baseContext, "Authentication success.",
+                                Toast.LENGTH_SHORT).show()
+                            goToMainActivity()
+                        } else {
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(baseContext, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun validate(email: String, password: String) : Boolean{
+        resetAllInputError()
+        if(!email.isEmail()){
+            setEmailError(getString(R.string.error_email_not_valid))
+            return false
         }
 
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        if(password.length < 8){
+            setPasswordError(getString(R.string.error_password_not_valid))
+            return false
+        }
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-    })
+        return true
+    }
+
+    private fun resetAllInputError(){
+        setEmailError(null)
+        setPasswordError(null)
+    }
+
+    private fun setEmailError(e : String?){
+//        binding.emailEditText.error = e
+    }
+
+    private fun setPasswordError(e: String?){
+//        binding.passwordEditText.error = e
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun goToMainActivity(){
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
+    }
 }

@@ -54,7 +54,7 @@ class customPasswordEditText : AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "password"
+        hint = "Password"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 }

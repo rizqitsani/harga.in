@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".presentation.login.LoginActivity"
+    >
 
 
     <ImageView
@@ -28,20 +29,20 @@
         android:layout_marginTop="8dp"
         android:text="@string/password"
         android:textAppearance="@android:style/TextAppearance.Material"
-        app:layout_constraintStart_toStartOf="@+id/EmailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/EmailEditText" />
+        app:layout_constraintStart_toStartOf="@+id/emailEditText"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/username"
+        android:text="@string/email"
         android:textAppearance="@android:style/TextAppearance.Material"
         app:layout_constraintStart_toStartOf="@+id/imageViewRegister"
         app:layout_constraintTop_toBottomOf="@+id/imageViewRegister" />
 
-    <com.bangkit.hargain.customEmailEditText
-        android:id="@+id/EmailEditText"
+    <EditText
+        android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -49,7 +50,6 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border_box"
         android:ems="10"
-        android:hint="@string/username"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,8 +58,8 @@
         app:layout_constraintTop_toBottomOf="@+id/username"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <com.bangkit.hargain.customPasswordEditText
-        android:id="@+id/PasswordEditText"
+    <EditText
+        android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -67,7 +67,6 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border_box"
         android:ems="10"
-        android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,34 +77,30 @@
 
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="64dp"
-        android:enabled="false"
         android:text="@string/action_sign_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordEditText"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
         app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
-        android:id="@+id/loading"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/PasswordEditText"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/PasswordEditText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        android:elevation="20dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

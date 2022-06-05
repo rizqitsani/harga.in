@@ -6,6 +6,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     compileSdk 32
 
@@ -17,12 +20,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        // default build config
-        buildConfigField 'String', 'API_BASE_URL', '"https://golang-heroku.herokuapp.com/api/"'
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_BASE_URL", "\"" + "https://6293b7937aa3e6af1a0fecc3.mockapi.io/api/v1/" + "\"")
+            buildConfigField("String", "GOOGLE_API_KEY", "\"" + localProperties['GOOGLE_API_KEY'] + "\"")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

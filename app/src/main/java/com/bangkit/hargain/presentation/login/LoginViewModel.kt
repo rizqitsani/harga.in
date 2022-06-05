@@ -2,9 +2,9 @@ package com.bangkit.hargain.presentation.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.bangkit.hargain.BuildConfig
 import com.bangkit.hargain.data.login.remote.api.AuthAPI
 import com.bangkit.hargain.domain.login.entity.LoginEntity
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +42,7 @@ class LoginViewModel: ViewModel() {
 
         CoroutineScope(Dispatchers.IO).launch {
             // Do the POST request and get response
-            val response = service.login("AIzaSyCZM_iCLT6ojI7l1tbCH-TPL2qfXOcS5FA", email, password, true)
+            val response = service.login(BuildConfig.GOOGLE_API_KEY, email, password, true)
 
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {

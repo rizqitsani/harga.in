@@ -1,20 +1,19 @@
 package com.bangkit.hargain.presentation.main.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.hargain.databinding.ItemGridCategoryBinding
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
-import com.bangkit.hargain.presentation.common.helper.CategoryDiffCallbak
+import com.bangkit.hargain.presentation.common.helper.CategoryDiffCallback
 import com.bumptech.glide.Glide
 
 class CategoryAdapter(private val categories: MutableList<CategoryEntity>): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     fun setCategories(categories: List<CategoryEntity>) {
-        val diffCallbak = CategoryDiffCallbak(this.categories, categories)
-        val diffResult = DiffUtil.calculateDiff(diffCallbak)
+        val diffCallback = CategoryDiffCallback(this.categories, categories)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.categories.clear()
         this.categories.addAll(categories)
         diffResult.dispatchUpdatesTo(this)

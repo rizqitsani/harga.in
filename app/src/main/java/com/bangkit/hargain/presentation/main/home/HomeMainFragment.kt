@@ -5,56 +5,109 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.hargain.R
+import com.bangkit.hargain.databinding.FragmentHomeMainBinding
+import com.bangkit.hargain.domain.category.entity.CategoryEntity
+import com.bangkit.hargain.presentation.common.extension.gone
+import com.bangkit.hargain.presentation.common.extension.showToast
+import com.bangkit.hargain.presentation.common.extension.visible
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeMainFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class HomeMainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentHomeMainBinding? = null
+    private val binding get() = _binding
+
+    private val viewModel: HomeMainViewModel by viewModels()
+
+    private lateinit var categoriesAdapter: CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_main, container, false)
+        _binding = FragmentHomeMainBinding.inflate(layoutInflater)
+        return binding?.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeMainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeMainFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
+        setupRecyclerView()
+        observe()
+
+        viewModel.fetchCategories()
+    }
+
+    private fun observe() {
+        observeState()
+        observeCategories()
+    }
+
+    private fun observeState() {
+        viewModel.mState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { state ->
+                handleState(state)
             }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun observeCategories() {
+        viewModel.mCategories
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { categories ->
+                handleCategories(categories)
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun handleState(state: HomeMainFragmentState) {
+        when(state) {
+            is HomeMainFragmentState.IsLoading -> handleLoading(state.isLoading)
+            is HomeMainFragmentState.ShowToast -> requireActivity().showToast(state.message)
+            is HomeMainFragmentState.Init -> Unit
+        }
+    }
+
+    private fun handleCategories(categories: List<CategoryEntity>) {
+        binding?.recyclerView?.adapter.let {
+            if(it is CategoryAdapter) {
+                it.setCategories(categories)
+            }
+        }
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        if(isLoading) {
+            binding?.progressBar?.visible()
+        } else {
+            binding?.progressBar?.gone()
+        }
+    }
+
+
+    private fun setupRecyclerView() {
+        categoriesAdapter = CategoryAdapter(mutableListOf())
+
+        binding?.recyclerView?.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = categoriesAdapter
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

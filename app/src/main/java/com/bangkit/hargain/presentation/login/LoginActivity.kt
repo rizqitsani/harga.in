@@ -8,19 +8,26 @@ import android.view.View
 import android.widget.Toast
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityLoginBinding
+import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.common.extension.TAG
 import com.bangkit.hargain.presentation.common.extension.isEmail
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +48,17 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             handleLoading(false)
+//                            val token = auth.currentUser?.token
+//                            val token = auth.getAccessToken(true).toString()
+//                            val token = FirebaseAuth.getInstance().currentUser
+                            val token = task.getResult().user
+                            val tokens = token?.getIdToken(true)
+                            val oke = task.result.user
+                            val okes = oke?.getIdToken(true)
+                            // TODO kok tokennya ga kebaca gais ? :)
+//                            val token = auth.currentUser?.getIdToken(false).toString()
+//                            Log.w(TAG, token)
+                            sharedPrefs.saveToken(okes)
                             Toast.makeText(baseContext, "Authentication success.",
                                 Toast.LENGTH_SHORT).show()
                             goToMainActivity()

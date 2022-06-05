@@ -136,6 +136,7 @@
         app:layout_constraintTop_toTopOf="@id/textKategori"
         app:layout_constraintVertical_bias="1.0" />
 
+
     <Button
         android:id="@+id/buttonEdit"
         android:layout_width="wrap_content"

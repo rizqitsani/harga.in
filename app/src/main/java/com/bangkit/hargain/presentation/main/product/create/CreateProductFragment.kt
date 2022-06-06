@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.FragmentCreateProductBinding
+import com.bangkit.hargain.databinding.FragmentMainSearchBinding
 import com.bangkit.hargain.presentation.common.helper.rotateBitmap
 import com.bangkit.hargain.presentation.common.helper.uriToFile
 import com.bangkit.hargain.presentation.main.product.camera.CameraActivity
@@ -35,8 +36,8 @@ class CreateProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_product, container, false)
+        _binding = FragmentCreateProductBinding.inflate(layoutInflater)
+        return binding?.root
     }
 
     //CameraLauncher

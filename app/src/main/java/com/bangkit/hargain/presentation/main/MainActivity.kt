@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityMainBinding
 import com.bangkit.hargain.infra.utils.SharedPrefs
@@ -42,8 +43,13 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        val appBarConfiguration = AppBarConfiguration.Builder(
+            R.id.homeMainFragment, R.id.mainSearchFragment, R.id.accountFragment
+        ).build()
+
         setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigationMenu.setupWithNavController(navController)
 
     }
 

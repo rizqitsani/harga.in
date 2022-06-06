@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/homeMainFragment"
         android:icon="@drawable/ic_home_24"
         android:title="@string/title_home"
 
         />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/mainSearchFragment"
         android:icon="@drawable/ic_search_24"
         android:title="@string/title_search"
 
         />
 
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/accountFragment"
         android:icon="@drawable/ic_person_24"
         android:title="@string/title_profile"
 

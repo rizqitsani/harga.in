@@ -20,17 +20,6 @@
         tools:srcCompat="@tools:sample/avatars" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="680dp"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
     <TextView
         android:id="@+id/textNama"
         android:layout_width="wrap_content"

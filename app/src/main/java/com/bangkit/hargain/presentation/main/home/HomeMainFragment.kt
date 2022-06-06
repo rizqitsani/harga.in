@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.hargain.R
@@ -100,8 +102,15 @@ class HomeMainFragment : Fragment() {
     private fun setupRecyclerView() {
         categoriesAdapter = CategoryAdapter(mutableListOf())
 
+        categoriesAdapter.setOnItemTapListener(object : CategoryAdapter.OnItemTap {
+            override fun onTap(category: CategoryEntity) {
+                val bundle = bundleOf("categoryId" to category.id)
+                findNavController().navigate(R.id.action_homeMainFragment_to_mainSearchFragment, bundle)
+            }
+        })
+
         binding?.recyclerView?.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = GridLayoutManager(activity, 3)
             adapter = categoriesAdapter
         }
     }

@@ -3,7 +3,7 @@ package com.bangkit.hargain.presentation.common.helper
 import androidx.recyclerview.widget.DiffUtil
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
 
-class CategoryDiffCallbak(private val mOldCatefories: List<CategoryEntity>, private val mNewCategories: List<CategoryEntity>) : DiffUtil.Callback() {
+class CategoryDiffCallback(private val mOldCatefories: List<CategoryEntity>, private val mNewCategories: List<CategoryEntity>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldCatefories.size
     }

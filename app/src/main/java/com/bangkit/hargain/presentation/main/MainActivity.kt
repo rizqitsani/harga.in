@@ -16,6 +16,8 @@ import com.bangkit.hargain.databinding.ActivityMainBinding
 import com.bangkit.hargain.domain.login.entity.LoginEntity
 import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.login.LoginActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,8 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
-    var currentUser: LoginEntity? = null
 
     @Inject
     lateinit var sharedPrefs: SharedPrefs
@@ -50,9 +50,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationMenu.setupWithNavController(navController)
 
-        val extras = intent.extras
-        currentUser = extras?.getParcelable<LoginEntity>(KEY_USER)
-
     }
 
     override fun onStart() {
@@ -72,13 +69,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun signOut() {
+        Firebase.auth.signOut()
         sharedPrefs.clear()
         goToLoginActivity()
-    }
-
-    @JvmName("getCurrentUser1")
-    fun getCurrentUser(): LoginEntity? {
-        return currentUser
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -104,9 +97,4 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
-
-    companion object {
-        val KEY_USER = "user"
-    }
-
 }

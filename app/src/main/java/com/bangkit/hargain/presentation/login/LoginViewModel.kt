@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModel
 import com.bangkit.hargain.BuildConfig
 import com.bangkit.hargain.data.login.remote.api.AuthAPI
 import com.bangkit.hargain.domain.login.entity.LoginEntity
+import com.bangkit.hargain.presentation.common.extension.TAG
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +31,8 @@ class LoginViewModel: ViewModel() {
     private fun showToast(message: String){
         state.value = LoginActivityState.ShowToast(message)
     }
+
+    private var auth: FirebaseAuth = Firebase.auth
 
     fun login(email: String, password: String) {
         // Create Retrofit
@@ -60,6 +66,8 @@ class LoginViewModel: ViewModel() {
             }
         }
     }
+
+
 
 
 }

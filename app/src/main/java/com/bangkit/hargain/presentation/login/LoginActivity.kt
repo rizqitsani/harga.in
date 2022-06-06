@@ -1,17 +1,15 @@
 package com.bangkit.hargain.presentation.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.bangkit.hargain.R
-import com.bangkit.hargain.data.login.remote.api.AuthAPI
 import com.bangkit.hargain.databinding.ActivityLoginBinding
 import com.bangkit.hargain.domain.login.entity.LoginEntity
 import com.bangkit.hargain.infra.utils.SharedPrefs
@@ -19,25 +17,18 @@ import com.bangkit.hargain.presentation.common.extension.TAG
 import com.bangkit.hargain.presentation.common.extension.isEmail
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.main.MainActivity
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
+/*
+* mohon maaf ini ada campuran login pakai api google dan firebase, masih berantakan tapi prioritas nanti aja ok
+* yang dipakai adalah api firebase, tapi di login view model masih fungsi2 api google
+* */
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
@@ -45,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var user: LoginEntity
 
     @Inject
@@ -54,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = Firebase.auth
+
         login()
         observe()
     }
@@ -65,9 +60,39 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString().trim()
 
             if(validate(email, password)) {
-                viewModel.login(email, password)
+                loginFirebase(email, password)
             }
         }
+    }
+
+    private fun loginFirebase(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    showToast("Authentication success.")
+                    saveToken()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    showToast("Authentication failed.")
+                }
+            }
+    }
+
+    private fun saveToken() {
+        val mUser = FirebaseAuth.getInstance().currentUser
+        mUser!!.getIdToken(true)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val idToken: String? = task.result.token
+                    sharedPrefs.saveToken(idToken ?: "")
+                    goToMainActivity()
+                } else {
+                    showToast("Authentication token failed.")
+                }
+            }
     }
 
     private fun validate(email: String, password: String) : Boolean{
@@ -127,7 +152,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun goToMainActivity(){
         val i = Intent(this@LoginActivity, MainActivity::class.java)
-        i.putExtra(MainActivity.KEY_USER, user)
         startActivity(i)
         finish()
     }

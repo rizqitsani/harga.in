@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bangkit.hargain.databinding.FragmentProfileBinding
 import com.bangkit.hargain.presentation.main.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
 
@@ -24,8 +25,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUser = (activity as MainActivity).getCurrentUser()
-        binding?.nameTextView?.text = currentUser?.name ?: "-"
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        binding?.nameTextView?.text = currentUser?.displayName ?: "-"
         binding?.emailTextView?.text = currentUser?.email ?: "-"
 
         binding?.signOutButton?.setOnClickListener {

@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bangkit.hargain.R
+import com.bangkit.hargain.databinding.FragmentHomeMainBinding
+import com.bangkit.hargain.databinding.FragmentMainSearchBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +21,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MainSearchFragment : Fragment() {
+
+    private var _binding: FragmentMainSearchBinding? = null
+    private val binding get() = _binding
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,8 +41,15 @@ class MainSearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_search, container, false)
+        _binding = FragmentMainSearchBinding.inflate(layoutInflater)
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding?.createProductFab?.setOnClickListener {
+            findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
+        }
     }
 
     companion object {

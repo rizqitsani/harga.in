@@ -16,6 +16,7 @@ import com.bangkit.hargain.databinding.ActivityMainBinding
 import com.bangkit.hargain.domain.login.entity.LoginEntity
 import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.login.LoginActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,15 +38,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar) // TODO ini dikemanain toolbarnya
+        setSupportActionBar(binding.toolbar)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration.Builder(
+        appBarConfiguration = AppBarConfiguration.Builder(
             R.id.homeMainFragment, R.id.mainSearchFragment, R.id.profileFragment
         ).build()
+
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationMenu.setupWithNavController(navController)
@@ -72,6 +75,10 @@ class MainActivity : AppCompatActivity() {
         Firebase.auth.signOut()
         sharedPrefs.clear()
         goToLoginActivity()
+    }
+
+    fun getBottomNav(): BottomNavigationView {
+        return binding?.bottomNavigationMenu
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

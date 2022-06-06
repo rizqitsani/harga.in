@@ -1,22 +1,24 @@
 package com.bangkit.hargain.presentation.main.product.create
 
 import android.Manifest
+import android.R
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.bangkit.hargain.R
+import androidx.fragment.app.Fragment
 import com.bangkit.hargain.databinding.FragmentCreateProductBinding
-import com.bangkit.hargain.databinding.FragmentMainSearchBinding
+import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.helper.rotateBitmap
 import com.bangkit.hargain.presentation.common.helper.uriToFile
+import com.bangkit.hargain.presentation.main.MainActivity
 import com.bangkit.hargain.presentation.main.product.camera.CameraActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 
 
@@ -25,19 +27,22 @@ class CreateProductFragment : Fragment() {
     private val binding get() = _binding
     private var getFile: File? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding?.cameraButton?.setOnClickListener { startCameraX() }
-        binding?.galleryButton?.setOnClickListener { startGallery() }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCreateProductBinding.inflate(layoutInflater)
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val bottomNav: BottomNavigationView = (requireActivity() as MainActivity).getBottomNav()
+        bottomNav.gone()
+
+        binding?.cameraButton?.setOnClickListener { startCameraX() }
+        binding?.galleryButton?.setOnClickListener { startGallery() }
     }
 
     //CameraLauncher
@@ -79,6 +84,10 @@ class CreateProductFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
 
     companion object {
         const val CAMERA_X_RESULT = 200

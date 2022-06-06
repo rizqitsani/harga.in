@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.bangkit.hargain.databinding.FragmentProfileBinding
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -32,5 +33,15 @@ class ProfileFragment : Fragment() {
         binding?.signOutButton?.setOnClickListener {
             (activity as MainActivity).signOut()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 }

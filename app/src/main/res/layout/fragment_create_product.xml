@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.main.product.create.CreateProductFragment"
-    android:layout_marginVertical="@dimen/activity_vertical_margin"
-    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    android:paddingVertical="@dimen/activity_vertical_margin"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
     >
 
     <com.google.android.material.textfield.TextInputLayout

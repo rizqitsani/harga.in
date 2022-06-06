@@ -1,18 +1,18 @@
 package com.bangkit.hargain.presentation.main.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.FragmentHomeMainBinding
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
@@ -22,6 +22,7 @@ import com.bangkit.hargain.presentation.common.extension.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+
 
 @AndroidEntryPoint
 class HomeMainFragment : Fragment() {
@@ -97,7 +98,6 @@ class HomeMainFragment : Fragment() {
         }
     }
 
-
     private fun setupRecyclerView() {
         categoriesAdapter = CategoryAdapter(mutableListOf())
 
@@ -117,5 +117,15 @@ class HomeMainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 }

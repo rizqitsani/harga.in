@@ -11,6 +11,16 @@ import com.bumptech.glide.Glide
 
 class CategoryAdapter(private val categories: MutableList<CategoryEntity>): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
+    interface OnItemTap {
+        fun onTap(category: CategoryEntity)
+    }
+
+    fun setOnItemTapListener(l: OnItemTap) {
+        onItemTapListener = l
+    }
+
+    private var onItemTapListener: OnItemTap? = null
+
     fun setCategories(categories: List<CategoryEntity>) {
         val diffCallback = CategoryDiffCallback(this.categories, categories)
         val diffResult = DiffUtil.calculateDiff(diffCallback)

@@ -29,7 +29,7 @@ class CategoryAdapter(private val categories: MutableList<CategoryEntity>): Recy
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class ViewHolder(val binding: CardCategoryBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val itemBinding: CardCategoryBinding) : RecyclerView.ViewHolder(itemBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = CardCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -43,8 +43,12 @@ class CategoryAdapter(private val categories: MutableList<CategoryEntity>): Recy
             .load(category.image)
             .override(80, 80)
             .centerCrop()
-            .into(holder.binding.categoryImage)
-        holder.binding.nameTextView.text = category.name
+            .into(holder.itemBinding.categoryImage)
+        holder.itemBinding.nameTextView.text = category.name
+
+        holder.itemBinding.root.setOnClickListener {
+            onItemTapListener?.onTap(category)
+        }
     }
 
     override fun getItemCount(): Int {

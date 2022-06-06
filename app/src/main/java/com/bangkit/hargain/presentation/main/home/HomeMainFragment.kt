@@ -105,6 +105,7 @@ class HomeMainFragment : Fragment() {
         categoriesAdapter.setOnItemTapListener(object : CategoryAdapter.OnItemTap {
             override fun onTap(category: CategoryEntity) {
                 val bundle = bundleOf("categoryId" to category.id)
+                requireActivity().showToast("clicked cuy")
                 findNavController().navigate(R.id.action_homeMainFragment_to_mainSearchFragment, bundle)
             }
         })

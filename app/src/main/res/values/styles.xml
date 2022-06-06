@@ -4,6 +4,7 @@
         <item name="backgroundTint">@color/primary_50</item>
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">10dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="buttonSecondary">
         <item name="backgroundTint">@color/white</item>
@@ -11,7 +12,15 @@
         <item name="strokeColor">@color/primary_50</item>
         <item name="strokeWidth">0.75dp</item>
         <item name="cornerRadius">10dp</item>
+        <item name="android:textStyle">bold</item>
 
     </style>
 
+
+    <style name="TextAppearance.Hargain.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/poppins_regular</item>
+    </style>
+    <style name="TextAppearance.Hargain.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/poppins_regular</item>
+    </style>
 </resources>

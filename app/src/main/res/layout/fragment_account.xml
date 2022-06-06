@@ -38,7 +38,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="32dp"
         android:text="@string/nama"
-        android:fontFamily="@font/poppins_bold"
+        android:textStyle="bold"
         android:textAppearance="@android:style/TextAppearance.Material"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />

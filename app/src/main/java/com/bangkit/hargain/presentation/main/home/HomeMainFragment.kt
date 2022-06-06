@@ -101,7 +101,7 @@ class HomeMainFragment : Fragment() {
         categoriesAdapter = CategoryAdapter(mutableListOf())
 
         binding?.recyclerView?.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = GridLayoutManager(activity, 3)
             adapter = categoriesAdapter
         }
     }

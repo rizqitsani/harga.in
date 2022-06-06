@@ -12,13 +12,13 @@
         <entry key="app/src/main/res/layout/fragment_create_product.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_detail_product.xml" value="0.16787993942481882" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.2265625" />
-        <entry key="app/src/main/res/layout/fragment_home_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home_main.xml" value="0.23632507324218752" />
         <entry key="app/src/main/res/layout/fragment_home_main_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.20471014492753623" />
         <entry key="app/src/main/res/layout/fragment_main_search.xml" value="0.22944610153419387" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.13269927536231885" />
         <entry key="app/src/main/res/layout/item_category.xml" value="0.1322463768115942" />
-        <entry key="app/src/main/res/layout/item_grid_category.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_grid_category.xml" value="0.22533111572265627" />
         <entry key="app/src/main/res/layout/product_row.xml" value="0.4339337113974751" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.3814453125" />
       </map>

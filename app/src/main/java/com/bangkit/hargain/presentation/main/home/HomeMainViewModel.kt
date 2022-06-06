@@ -53,7 +53,9 @@ class HomeMainViewModel @Inject constructor(private val getAllCategoriesUseCase:
                     setLoading(false)
                     when(result) {
                         is BaseResult.Success -> {
+                            val hey = result
                             categories.value = result.data
+                            val oke = "hasna"
                         }
                         is BaseResult.Error -> {
                             showToast(result.rawResponse.message)

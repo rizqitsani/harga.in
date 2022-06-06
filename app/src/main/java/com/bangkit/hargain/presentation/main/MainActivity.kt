@@ -28,17 +28,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    private lateinit var auth: FirebaseAuth
-    var currentUser : FirebaseUser? = null
+    @Inject
+    lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = FirebaseAuth.getInstance()
-        currentUser = auth.currentUser
 
         setSupportActionBar(binding.toolbar) // TODO ini dikemanain toolbarnya
 
@@ -56,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkIsLoggedIn() {
-        if (currentUser === null) {
+        if (sharedPrefs.getToken().isEmpty()) {
             goToLoginActivity()
         }
     }
@@ -67,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
-        auth.signOut()
+        sharedPrefs.clear()
         goToLoginActivity()
     }
 

@@ -38,6 +38,7 @@ object NetworkModule {
         }.build()
     }
 
+    @Provides
     fun provideRequestInterceptor(prefs: SharedPrefs) : RequestInterceptor {
         return RequestInterceptor(prefs)
     }

@@ -17,6 +17,8 @@ buildscript {
     ext.activity_ktx_version = "1.2.3"
     ext.lifecycle_version = "2.4.0-alpha02"
 
+    ext.glide_version = "4.13.0"
+
 
     repositories {
         google()

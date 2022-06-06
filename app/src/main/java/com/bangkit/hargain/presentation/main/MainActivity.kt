@@ -13,12 +13,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityMainBinding
+import com.bangkit.hargain.domain.login.entity.LoginEntity
 import com.bangkit.hargain.infra.utils.SharedPrefs
 import com.bangkit.hargain.presentation.login.LoginActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+
+    var currentUser: LoginEntity? = null
 
     @Inject
     lateinit var sharedPrefs: SharedPrefs
@@ -45,11 +44,14 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.homeMainFragment, R.id.mainSearchFragment, R.id.accountFragment
+            R.id.homeMainFragment, R.id.mainSearchFragment, R.id.profileFragment
         ).build()
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavigationMenu.setupWithNavController(navController)
+
+        val extras = intent.extras
+        currentUser = extras?.getParcelable<LoginEntity>(KEY_USER)
 
     }
 
@@ -69,9 +71,14 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun signOut() {
+    fun signOut() {
         sharedPrefs.clear()
         goToLoginActivity()
+    }
+
+    @JvmName("getCurrentUser1")
+    fun getCurrentUser(): LoginEntity? {
+        return currentUser
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -96,6 +103,10 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    companion object {
+        val KEY_USER = "user"
     }
 
 }

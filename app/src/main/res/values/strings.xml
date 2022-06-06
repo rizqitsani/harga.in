@@ -31,8 +31,8 @@
     <string name="product_price">Rp.XXXXXX</string>
     <string name="kategori">Kategori</string>
     <string name="edit_product">Ubah Produk</string>
-    <string name="nama">Nama</string>
-    <string name="sign_out">sign out</string>
+    <string name="name">Name</string>
+    <string name="sign_out">Sign out</string>
     <string name="product_picture">Product Picture</string>
     <string name="merk">Merk</string>
     <string name="email">Email</string>
@@ -45,4 +45,5 @@
     <string name="description">Description</string>
     <string name="current_price">Current Price</string>
     <string name="save">Save</string>
+    <string name="title_activity_testing">TestingActivity</string>
 </resources>

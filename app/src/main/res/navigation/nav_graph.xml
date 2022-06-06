@@ -14,7 +14,7 @@
             app:destination="@id/mainSearchFragment" />
         <action
             android:id="@+id/action_homeMainFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainSearchFragment"
@@ -26,10 +26,10 @@
             app:destination="@id/createProductFragment" />
     </fragment>
     <fragment
-        android:id="@+id/accountFragment"
-        android:name="com.bangkit.hargain.presentation.main.mainmenu.account.AccountFragment"
-        android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
+        android:id="@+id/profileFragment"
+        android:name="com.bangkit.hargain.presentation.main.mainmenu.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/createProductFragment"
         android:name="com.bangkit.hargain.presentation.main.product.create.CreateProductFragment"

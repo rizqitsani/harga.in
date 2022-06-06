@@ -45,6 +45,8 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
 
+    private lateinit var user: LoginEntity
+
     @Inject
     lateinit var sharedPrefs: SharedPrefs
 
@@ -114,6 +116,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleSuccessLogin(loginEntity: LoginEntity){
+        user = loginEntity
         sharedPrefs.saveToken(loginEntity.idToken)
         goToMainActivity()
     }
@@ -123,7 +126,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity(){
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        val i = Intent(this@LoginActivity, MainActivity::class.java)
+        i.putExtra(MainActivity.KEY_USER, user)
+        startActivity(i)
         finish()
     }
 }

@@ -24,17 +24,12 @@ import com.bangkit.hargain.presentation.main.MainActivity
 import com.bangkit.hargain.presentation.main.product.camera.CameraActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.FirebaseApp
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.net.URI
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 
 class CreateProductFragment : Fragment() {

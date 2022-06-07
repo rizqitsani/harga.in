@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit.hargain.domain.product.entity.ProductEntity
-import com.bangkit.hargain.domain.product.usecase.GetProductDetailUseCase
+import com.bangkit.hargain.domain.product.usecase.ProductUseCase
 import com.bangkit.hargain.presentation.common.base.BaseResult
 import com.bangkit.hargain.presentation.common.extension.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailProductViewModel @Inject constructor(private val getProductDetailUseCase: GetProductDetailUseCase) :
+class DetailProductViewModel @Inject constructor(private val productUseCase: ProductUseCase) :
     ViewModel() {
 
     private val state =
@@ -31,9 +31,13 @@ class DetailProductViewModel @Inject constructor(private val getProductDetailUse
         state.value = DetailProductFragmentState.ShowToast(message)
     }
 
+    private fun setIsDeleted(isDeleted: Boolean) {
+        state.value = DetailProductFragmentState.IsDeleteSuccess(isDeleted)
+    }
+
     fun fetchProductDetail(productId: String) {
         viewModelScope.launch {
-            getProductDetailUseCase.invoke(productId)
+            productUseCase.getDetail(productId)
                 .onStart {
                     setLoading(true)
                 }
@@ -56,10 +60,37 @@ class DetailProductViewModel @Inject constructor(private val getProductDetailUse
         }
     }
 
+    fun deleteProduct(productId: String) {
+        viewModelScope.launch {
+            productUseCase.delete(productId)
+                .onStart {
+                    setLoading(true)
+                }
+                .catch { exception ->
+                    setLoading(false)
+                    Log.w(TAG, "deleteProduct:failure", exception)
+                    showToast(exception.message.toString())
+                }
+                .collect { result ->
+                    setLoading(false)
+                    when (result) {
+                        is BaseResult.Success -> {
+                            setIsDeleted(true)
+                        }
+                        is BaseResult.Error -> {
+                            setIsDeleted(false)
+                            showToast(result.rawResponse.message)
+                        }
+                    }
+                }
+        }
+    }
+
 }
 
 sealed class DetailProductFragmentState {
     object Init : DetailProductFragmentState()
     data class IsLoading(val isLoading: Boolean) : DetailProductFragmentState()
     data class ShowToast(val message: String) : DetailProductFragmentState()
+    data class IsDeleteSuccess(val isDeleted: Boolean) : DetailProductFragmentState()
 }

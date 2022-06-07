@@ -8,8 +8,12 @@ import com.bangkit.hargain.presentation.common.base.BaseResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetProductDetailUseCase @Inject constructor(private val productRepository: ProductRepository) {
-    suspend fun invoke(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+class ProductUseCase @Inject constructor(private val productRepository: ProductRepository) {
+    suspend fun getDetail(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
         return productRepository.getProductDetail(productId)
+    }
+
+    suspend fun delete(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+        return productRepository.deleteProduct(productId)
     }
 }

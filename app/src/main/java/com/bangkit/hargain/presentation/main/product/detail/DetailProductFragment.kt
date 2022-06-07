@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.FragmentDetailProductBinding
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
@@ -26,6 +28,8 @@ class DetailProductFragment : Fragment() {
 
     private val viewModel: DetailProductViewModel by viewModels()
 
+    private val productId = "Tyt0EFSoW5vMTTg0tMk6"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,9 +44,12 @@ class DetailProductFragment : Fragment() {
 //        TODO: add safe arg on nav graph
 //        val productId = DetailProductFragmentArgs.fromBundle(arguments as Bundle).productId
 
+        viewModel.fetchProductDetail(productId)
         observe()
 
-        viewModel.fetchProductDetail("wsXWCpjeyXF91QfPAgqO")
+        binding?.buttonDelete?.setOnClickListener {
+            viewModel.deleteProduct(productId)
+        }
     }
 
     private fun observe() {
@@ -63,16 +70,19 @@ class DetailProductFragment : Fragment() {
         viewModel.mProduct
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { product ->
-                if(product !== null)
+                if (product !== null)
                     handleProductDetail(product)
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun handleState(state: DetailProductFragmentState) {
-        when(state) {
+        when (state) {
             is DetailProductFragmentState.IsLoading -> handleLoading(state.isLoading)
             is DetailProductFragmentState.ShowToast -> requireActivity().showToast(state.message)
+            is DetailProductFragmentState.IsDeleteSuccess -> if (state.isDeleted) findNavController().navigate(
+                R.id.action_detailProductFragment_to_mainSearchFragment
+            )
             is DetailProductFragmentState.Init -> Unit
         }
     }
@@ -92,7 +102,7 @@ class DetailProductFragment : Fragment() {
     }
 
     private fun handleLoading(isLoading: Boolean) {
-        if(isLoading) {
+        if (isLoading) {
             binding?.progressBar?.visible()
             binding?.imageView?.gone()
             binding?.productName?.gone()

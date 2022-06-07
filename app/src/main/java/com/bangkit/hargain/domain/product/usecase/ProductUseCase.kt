@@ -1,6 +1,7 @@
 package com.bangkit.hargain.domain.product.usecase
 
 import com.bangkit.hargain.data.common.utils.WrappedResponse
+import com.bangkit.hargain.data.product.remote.dto.ProductListResponse
 import com.bangkit.hargain.data.product.remote.dto.ProductResponse
 import com.bangkit.hargain.domain.product.ProductRepository
 import com.bangkit.hargain.domain.product.entity.ProductEntity
@@ -9,6 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ProductUseCase @Inject constructor(private val productRepository: ProductRepository) {
+    suspend fun getAll(): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+        return productRepository.getAllProduct()
+    }
+
     suspend fun getDetail(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
         return productRepository.getProductDetail(productId)
     }

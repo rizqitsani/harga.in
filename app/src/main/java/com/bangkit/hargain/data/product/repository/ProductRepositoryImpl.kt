@@ -3,6 +3,7 @@ package com.bangkit.hargain.data.product.repository
 import com.bangkit.hargain.data.common.utils.WrappedResponse
 import com.bangkit.hargain.data.product.remote.api.ProductApi
 import com.bangkit.hargain.data.product.remote.dto.ProductCreateRequest
+import com.bangkit.hargain.data.product.remote.dto.ProductListResponse
 import com.bangkit.hargain.data.product.remote.dto.ProductResponse
 import com.bangkit.hargain.domain.product.ProductRepository
 import com.bangkit.hargain.domain.product.entity.ProductEntity
@@ -15,6 +16,37 @@ import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(private val productApi: ProductApi) :
     ProductRepository {
+    override suspend fun getAllProduct(): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+        return flow {
+            val response = productApi.getAllProducts()
+            if (response.isSuccessful) {
+                val body = response.body()
+                val products = mutableListOf<ProductEntity>()
+                body?.data?.forEach { productResponse ->
+                    products.add(
+                        ProductEntity(
+                            productResponse.productId,
+                            productResponse.title,
+                            productResponse.description,
+                            productResponse.image,
+                            "",
+                            "",
+                            productResponse.optimalPrice.toInt()
+                        )
+                    )
+                }
+
+                emit(BaseResult.Success(products))
+            } else {
+                val type = object : TypeToken<WrappedResponse<ProductListResponse>>() {}.type
+                val err = Gson().fromJson<WrappedResponse<ProductListResponse>>(
+                    response.errorBody()!!.charStream(), type
+                )!!
+                emit(BaseResult.Error(err))
+            }
+        }
+    }
+
     override suspend fun getProductDetail(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
         return flow {
             val response = productApi.getProductById(productId)
@@ -73,7 +105,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
             }
         }
     }
-    
+
     override suspend fun deleteProduct(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
         return flow {
             val response = productApi.deleteProduct(productId)

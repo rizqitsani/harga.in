@@ -8,7 +8,7 @@
         android:id="@+id/homeMainFragment"
         android:name="com.bangkit.hargain.presentation.main.home.HomeMainFragment"
         android:label="fragment_home_main"
-        tools:layout="@layout/fragment_home_main" >
+        tools:layout="@layout/fragment_home_main">
         <action
             android:id="@+id/action_homeMainFragment_to_mainSearchFragment"
             app:destination="@id/mainSearchFragment" />
@@ -20,7 +20,7 @@
         android:id="@+id/mainSearchFragment"
         android:name="com.bangkit.hargain.presentation.main.mainmenu.mainsearch.MainSearchFragment"
         android:label="fragment_main_search"
-        tools:layout="@layout/fragment_main_search" >
+        tools:layout="@layout/fragment_main_search">
         <action
             android:id="@+id/action_mainSearchFragment_to_createProductFragment"
             app:destination="@id/createProductFragment" />
@@ -42,9 +42,12 @@
         android:id="@+id/detailProductFragment"
         android:name="com.bangkit.hargain.presentation.main.product.detail.DetailProductFragment"
         android:label="fragment_detail_product"
-        tools:layout="@layout/fragment_detail_product" >
+        tools:layout="@layout/fragment_detail_product">
         <action
             android:id="@+id/action_detailProductFragment_to_mainSearchFragment"
             app:destination="@id/mainSearchFragment" />
+        <argument
+            android:name="productId"
+            app:argType="string" />
     </fragment>
 </navigation>

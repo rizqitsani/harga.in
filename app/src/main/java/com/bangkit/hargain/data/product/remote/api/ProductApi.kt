@@ -9,26 +9,26 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ProductApi {
-    @GET("product")
+    @GET("products")
     suspend fun getAllProducts() : Response<WrappedListResponse<ProductResponse>>
 
-    @GET("product/{id}")
+    @GET("products/{id}")
     suspend fun getProductById(
         @Path("id") id: String
     ) : Response<WrappedResponse<ProductResponse>>
 
-    @POST("product")
+    @POST("products")
     suspend fun createProduct(
         @Body productCreateRequest: ProductCreateRequest
     ) : Response<WrappedResponse<ProductResponse>>
 
-    @PUT("product/{id}")
+    @PUT("products/{id}")
     suspend fun updateProduct(
         @Body productUpdateRequest: ProductUpdateRequest,
         @Path("id") id: String
     ) : Response<WrappedResponse<ProductResponse>>
 
-    @DELETE("product/{id}")
+    @DELETE("products/{id}")
     suspend fun deleteProduct(
         @Path("id") id: String
     ) : Response<WrappedResponse<ProductResponse>>

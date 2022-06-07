@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_BASE_URL", "\"" + "https://6293b7937aa3e6af1a0fecc3.mockapi.io/api/v1/" + "\"")
+            buildConfigField("String", "API_BASE_URL", "\"" + "https://us-central1-hargain-f7a81.cloudfunctions.net/" + "\"")
             buildConfigField("String", "GOOGLE_API_KEY", "\"" + localProperties['GOOGLE_API_KEY'] + "\"")
         }
         release {

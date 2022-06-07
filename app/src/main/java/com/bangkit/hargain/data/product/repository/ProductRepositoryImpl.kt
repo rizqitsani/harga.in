@@ -21,22 +21,20 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
             if (response.isSuccessful) {
                 val productResponse = response.body()?.data
 
-//                productResponse?.let {
-//                    val product = ProductEntity(
-//                        productResponse.productId,
-//                        productResponse.title,
-//                        productResponse.description,
-//                        productResponse.image,
-//                        productResponse.brandId,
-//                        productResponse.categoryId,
-//                        productResponse.optimalPrice.toFloat(),
-//                        0.toFloat(),
-//                        0.toFloat(),
-//                        0.toFloat()
-//                    )
+                productResponse?.let {
+                    val product = ProductEntity(
+                        productResponse.id,
+                        productResponse.title,
+                        productResponse.description,
+                        // TODO: change with image response
+                        "tes",
+                        productResponse.brandId,
+                        productResponse.categoryId,
+                        productResponse.optimalPrice
+                    )
 
-//                    emit(BaseResult.Success(product))
-//                }
+                   emit(BaseResult.Success(product))
+               }
             } else {
                 val type = object : TypeToken<WrappedResponse<ProductResponse>>() {}.type
                 val err = Gson().fromJson<WrappedResponse<ProductResponse>>(

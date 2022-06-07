@@ -24,13 +24,17 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                 val products = mutableListOf<ProductEntity>()
                 body?.data?.forEach { productResponse ->
                     products.add(
-                        ProductEntity(
+                        ProductEntity( // TODO benerin argumen
                             productResponse.productId,
                             productResponse.title,
                             productResponse.description,
                             productResponse.image,
                             "",
                             "",
+                            0.toDouble(),
+                            productResponse.optimalPrice,
+                            productResponse.optimalPrice,
+                            productResponse.optimalPrice,
                             productResponse.optimalPrice
                         )
                     )
@@ -61,7 +65,11 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.image,
                         productResponse.brandId,
                         productResponse.categoryId,
-                        productResponse.optimalPrice
+                        productResponse.currentPrice,
+                        productResponse.optimalPrice,
+                        productResponse.cost,
+                        productResponse.startPrice,
+                        productResponse.endPrice
                     )
 
                    emit(BaseResult.Success(product))
@@ -120,7 +128,11 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         "tes",
                         productResponse.brandId,
                         productResponse.categoryId,
-                        productResponse.optimalPrice
+                        productResponse.currentPrice,
+                        productResponse.optimalPrice,
+                        productResponse.cost,
+                        productResponse.startPrice,
+                        productResponse.endPrice
                     )
 
                     emit(BaseResult.Success(product))

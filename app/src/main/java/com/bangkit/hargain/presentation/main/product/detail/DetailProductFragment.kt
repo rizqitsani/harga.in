@@ -47,6 +47,9 @@ class DetailProductFragment : Fragment() {
         viewModel.fetchProductDetail(productId)
         observe()
 
+        binding?.buttonBack?.setOnClickListener {
+            findNavController().navigate(R.id.action_detailProductFragment_to_mainSearchFragment)
+        }
         binding?.buttonDelete?.setOnClickListener {
             viewModel.deleteProduct(productId)
         }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.type.DateTime
 
 data class ProductResponse(
-    @SerializedName("productId") val productId: String,
+    @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
     @SerializedName("brandId") val brandId: String,

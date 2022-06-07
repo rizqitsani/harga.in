@@ -1,7 +1,6 @@
 package com.bangkit.hargain.presentation.common.helper
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 
 class ProductDiffCallback(private val mOldProducts: List<ProductEntity>, private val mNewProducts: List<ProductEntity>) : DiffUtil.Callback() {
@@ -14,7 +13,7 @@ class ProductDiffCallback(private val mOldProducts: List<ProductEntity>, private
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mOldProducts[oldItemPosition].productId == mNewProducts[newItemPosition].productId
+        return mOldProducts[oldItemPosition].id == mNewProducts[newItemPosition].id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

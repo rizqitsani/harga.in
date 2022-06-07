@@ -22,10 +22,11 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
 
                 productResponse?.let {
                     val product = ProductEntity(
-                        productResponse.productId,
+                        productResponse.id,
                         productResponse.title,
                         productResponse.description,
-                        productResponse.image,
+                        // TODO: change with image response
+                        "tes",
                         productResponse.brandId,
                         productResponse.categoryId,
                         productResponse.optimalPrice

@@ -58,8 +58,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.id,
                         productResponse.title,
                         productResponse.description,
-                        // TODO: change with image response
-                        "tes",
+                        productResponse.image,
                         productResponse.brandId,
                         productResponse.categoryId,
                         productResponse.optimalPrice

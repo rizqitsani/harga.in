@@ -6,5 +6,6 @@ data class ProductEntity(
     var description: String,
     var image: String,
     var brandId: String,
-    var categoryId: String
+    var categoryId: String,
+    var optimalPrice: Int
 )

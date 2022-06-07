@@ -5,7 +5,7 @@ import com.bangkit.hargain.data.common.utils.WrappedListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface CategoryApi {
+interface  CategoryApi {
     @GET("categories")
     suspend fun getAllCategories() : Response<WrappedListResponse<CategoryResponse>>
 }

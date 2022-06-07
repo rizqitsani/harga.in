@@ -1,10 +1,9 @@
 package com.bangkit.hargain.presentation.common.helper
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 
-class ProductDiffCallbak(private val mOldProducts: List<ProductEntity>, private val mNewProducts: List<ProductEntity>) : DiffUtil.Callback() {
+class ProductDiffCallback(private val mOldProducts: List<ProductEntity>, private val mNewProducts: List<ProductEntity>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldProducts.size
     }

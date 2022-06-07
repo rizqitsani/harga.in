@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id 'androidx.navigation.safeargs'
 }
 
 def localProperties = new Properties()
@@ -25,7 +26,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_BASE_URL", "\"" + "https://6293b7937aa3e6af1a0fecc3.mockapi.io/api/v1/" + "\"")
+            buildConfigField("String", "API_BASE_URL", "\"" + "https://us-central1-hargain-f7a81.cloudfunctions.net/" + "\"")
             buildConfigField("String", "GOOGLE_API_KEY", "\"" + localProperties['GOOGLE_API_KEY'] + "\"")
         }
         release {
@@ -91,6 +92,8 @@ dependencies {
     // Declare the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    implementation 'com.google.firebase:firebase-storage'
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"

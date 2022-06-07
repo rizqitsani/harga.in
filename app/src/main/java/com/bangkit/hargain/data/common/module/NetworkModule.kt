@@ -1,7 +1,6 @@
 package com.bangkit.hargain.data.common.module
 
 import com.bangkit.hargain.BuildConfig
-import com.bangkit.hargain.R
 import com.bangkit.hargain.data.common.utils.RequestInterceptor
 import com.bangkit.hargain.infra.utils.SharedPrefs
 import dagger.Module

@@ -31,7 +31,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                             productResponse.image,
                             "",
                             "",
-                            productResponse.optimalPrice.toInt()
+                            productResponse.optimalPrice
                         )
                     )
                 }

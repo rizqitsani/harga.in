@@ -46,4 +46,7 @@
     <string name="current_price">Current Price</string>
     <string name="save">Save</string>
     <string name="title_activity_testing">TestingActivity</string>
+    <string name="cost">Cost</string>
+    <string name="start_price">Start Price</string>
+    <string name="end_price">End Price</string>
 </resources>

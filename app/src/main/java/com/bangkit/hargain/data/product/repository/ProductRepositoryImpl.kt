@@ -2,6 +2,7 @@ package com.bangkit.hargain.data.product.repository
 
 import com.bangkit.hargain.data.common.utils.WrappedResponse
 import com.bangkit.hargain.data.product.remote.api.ProductApi
+import com.bangkit.hargain.data.product.remote.dto.ProductCreateRequest
 import com.bangkit.hargain.data.product.remote.dto.ProductResponse
 import com.bangkit.hargain.domain.product.ProductRepository
 import com.bangkit.hargain.domain.product.entity.ProductEntity
@@ -20,24 +21,54 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
             if (response.isSuccessful) {
                 val productResponse = response.body()?.data
 
-                productResponse?.let {
-                    val product = ProductEntity(
-                        productResponse.productId,
-                        productResponse.title,
-                        productResponse.description,
-                        productResponse.image,
-                        productResponse.brandId,
-                        productResponse.categoryId,
-                        productResponse.optimalPrice
-                    )
+//                productResponse?.let {
+//                    val product = ProductEntity(
+//                        productResponse.productId,
+//                        productResponse.title,
+//                        productResponse.description,
+//                        productResponse.image,
+//                        productResponse.brandId,
+//                        productResponse.categoryId,
+//                        productResponse.optimalPrice.toFloat(),
+//                        0.toFloat(),
+//                        0.toFloat(),
+//                        0.toFloat()
+//                    )
 
-                    emit(BaseResult.Success(product))
-                }
+//                    emit(BaseResult.Success(product))
+//                }
             } else {
                 val type = object : TypeToken<WrappedResponse<ProductResponse>>() {}.type
                 val err = Gson().fromJson<WrappedResponse<ProductResponse>>(
                     response.errorBody()!!.charStream(), type
                 )!!
+                emit(BaseResult.Error(err))
+            }
+        }
+    }
+
+    override suspend fun createProduct(productCreateRequest: ProductCreateRequest): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+        return flow {
+            val response = productApi.createProduct(productCreateRequest)
+            if(response.isSuccessful){
+                val data = response.body()?.data!!
+                val product = ProductEntity(
+                    data.id,
+                    data.title,
+                    data.description,
+                    data.image,
+                    data.brandId,
+                    data.categoryId,
+                    data.currentPrice,
+                    data.optimalPrice,
+                    data.cost,
+                    data.startPrice,
+                    data.endPrice
+                )
+                emit(BaseResult.Success(product))
+            }else{
+                val type = object : TypeToken<WrappedResponse<ProductResponse>>(){}.type
+                val err = Gson().fromJson<WrappedResponse<ProductResponse>>(response.errorBody()!!.charStream(), type)!!
                 emit(BaseResult.Error(err))
             }
         }

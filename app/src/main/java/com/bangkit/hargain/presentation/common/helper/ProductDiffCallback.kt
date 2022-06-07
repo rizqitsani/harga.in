@@ -14,7 +14,7 @@ class ProductDiffCallback(private val mOldProducts: List<ProductEntity>, private
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mOldProducts[oldItemPosition].productId == mNewProducts[newItemPosition].productId
+        return mOldProducts[oldItemPosition].id == mNewProducts[newItemPosition].id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

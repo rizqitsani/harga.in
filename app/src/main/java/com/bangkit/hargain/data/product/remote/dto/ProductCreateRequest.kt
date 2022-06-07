@@ -4,11 +4,14 @@ import com.google.gson.annotations.SerializedName
 import com.google.type.DateTime
 
 data class ProductCreateRequest(
-    @SerializedName("name") val name: String,
+    @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
-    @SerializedName("brand_id") val brandId: Int,
-    @SerializedName("category_id") val categoryId: Int,
-    @SerializedName("current_price") val currentPrice: Int,
+    @SerializedName("brandId") val brandId: String,
+    @SerializedName("categoryId") val categoryId: String,
+    @SerializedName("currentPrice") val currentPrice: Double,
+    @SerializedName("cost") val cost: Double,
     @SerializedName("image") val image: String,
+    @SerializedName("startPrice") val startPrice: Double,
+    @SerializedName("endPrice") val endPrice: Double
 
-)
+    )

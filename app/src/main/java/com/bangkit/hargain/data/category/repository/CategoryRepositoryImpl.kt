@@ -22,7 +22,7 @@ class CategoryRepositoryImpl @Inject constructor(private val categoryApi: Catego
                 body?.data?.forEach { categoryResponse ->
                     categories.add(
                         CategoryEntity(
-                            categoryResponse.id,
+                            categoryResponse.categoryId,
                             categoryResponse.name,
                             categoryResponse.image
                         )

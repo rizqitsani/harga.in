@@ -5,22 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.FragmentDetailProductBinding
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class DetailProductFragment : Fragment() {
-
+    private lateinit var productId: String
     private var _binding: FragmentDetailProductBinding? = null
     private val binding get() = _binding
 
@@ -36,13 +40,19 @@ class DetailProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
-//        TODO: add safe arg on nav graph
-//        val productId = DetailProductFragmentArgs.fromBundle(arguments as Bundle).productId
+        productId = DetailProductFragmentArgs.fromBundle(arguments as Bundle).productId
 
+        viewModel.fetchProductDetail(productId)
         observe()
 
-        viewModel.fetchProductDetail("wsXWCpjeyXF91QfPAgqO")
+        binding?.buttonBack?.setOnClickListener {
+            findNavController().navigate(R.id.action_detailProductFragment_to_mainSearchFragment)
+        }
+        binding?.buttonDelete?.setOnClickListener {
+            viewModel.deleteProduct(productId)
+        }
     }
 
     private fun observe() {
@@ -63,26 +73,31 @@ class DetailProductFragment : Fragment() {
         viewModel.mProduct
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { product ->
-                if(product !== null)
+                if (product !== null)
                     handleProductDetail(product)
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun handleState(state: DetailProductFragmentState) {
-        when(state) {
+        when (state) {
             is DetailProductFragmentState.IsLoading -> handleLoading(state.isLoading)
             is DetailProductFragmentState.ShowToast -> requireActivity().showToast(state.message)
+            is DetailProductFragmentState.IsDeleteSuccess -> if (state.isDeleted) findNavController().navigate(
+                R.id.action_detailProductFragment_to_mainSearchFragment
+            )
             is DetailProductFragmentState.Init -> Unit
         }
     }
 
     private fun handleProductDetail(product: ProductEntity) {
-//        TODO: load image
-//        Glide.with(this)
-//            .load(product.avatarUrl)
-//            .apply(RequestOptions().override(550, 550))
-//            .into(binding?.imgAvatar as CircleImageView)
+        binding?.imageView?.let {
+            Glide.with(this)
+                .load(product.image)
+                .override(80, 80)
+                .centerCrop()
+                .into(it)
+        }
 
         binding?.productName?.text = product.title
         binding?.price?.text = product.optimalPrice.toString()
@@ -92,7 +107,7 @@ class DetailProductFragment : Fragment() {
     }
 
     private fun handleLoading(isLoading: Boolean) {
-        if(isLoading) {
+        if (isLoading) {
             binding?.progressBar?.visible()
             binding?.imageView?.gone()
             binding?.productName?.gone()
@@ -105,6 +120,16 @@ class DetailProductFragment : Fragment() {
             binding?.price?.visible()
             binding?.layoutDescription?.visible()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
     override fun onDestroyView() {

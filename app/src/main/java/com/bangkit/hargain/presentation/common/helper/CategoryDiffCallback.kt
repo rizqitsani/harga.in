@@ -13,7 +13,7 @@ class CategoryDiffCallback(private val mOldCatefories: List<CategoryEntity>, pri
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mOldCatefories[oldItemPosition].id == mNewCategories[newItemPosition].id
+        return mOldCatefories[oldItemPosition].categoryId == mNewCategories[newItemPosition].categoryId
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

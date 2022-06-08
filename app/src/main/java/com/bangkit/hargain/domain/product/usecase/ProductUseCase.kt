@@ -12,6 +12,10 @@ import javax.inject.Inject
 
 
 class ProductUseCase @Inject constructor(private val productRepository: ProductRepository) {
+    suspend fun create(productCreateRequest: ProductCreateRequest): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+        return productRepository.createProduct(productCreateRequest)
+    }
+
     suspend fun getAll(): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
         return productRepository.getAllProduct()
     }

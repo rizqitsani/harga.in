@@ -8,7 +8,7 @@ import com.bangkit.hargain.domain.brand.entity.BrandEntity
 import com.bangkit.hargain.domain.brand.usecase.BrandUseCase
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.category.usecase.GetAllCategoriesUseCase
-import com.bangkit.hargain.domain.product.usecase.CreateProductUseCase
+import com.bangkit.hargain.domain.product.usecase.ProductUseCase
 import com.bangkit.hargain.presentation.common.base.BaseResult
 import com.bangkit.hargain.presentation.common.extension.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateProductViewModel @Inject constructor(
-    private val createProductUseCase: CreateProductUseCase,
+    private val productUseCase: ProductUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val brandUseCase: BrandUseCase
     ): ViewModel() {
@@ -46,7 +46,7 @@ class CreateProductViewModel @Inject constructor(
 
     fun createProduct(productCreateRequest: ProductCreateRequest){
         viewModelScope.launch {
-            createProductUseCase.invoke(productCreateRequest)
+            productUseCase.create(productCreateRequest)
                 .onStart {
                     setLoading(true)
                 }

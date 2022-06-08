@@ -62,8 +62,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.id,
                         productResponse.title,
                         productResponse.description,
-                        // TODO: change with image response
-                        "tes",
+                        productResponse.image,
                         productResponse.brandId,
                         productResponse.categoryId,
                         productResponse.currentPrice,
@@ -125,8 +124,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.id,
                         productResponse.title,
                         productResponse.description,
-                        // TODO: change with image response
-                        "tes",
+                        productResponse.image,
                         productResponse.brandId,
                         productResponse.categoryId,
                         productResponse.currentPrice,
@@ -134,36 +132,6 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.cost,
                         productResponse.startPrice,
                         productResponse.endPrice
-                    )
-
-                    emit(BaseResult.Success(product))
-                }
-            } else {
-                val type = object : TypeToken<WrappedResponse<ProductResponse>>() {}.type
-                val err = Gson().fromJson<WrappedResponse<ProductResponse>>(
-                    response.errorBody()!!.charStream(), type
-                )!!
-                emit(BaseResult.Error(err))
-            }
-        }
-    }
-
-    override suspend fun deleteProduct(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
-        return flow {
-            val response = productApi.deleteProduct(productId)
-            if (response.isSuccessful) {
-                val productResponse = response.body()?.data
-
-                productResponse?.let {
-                    val product = ProductEntity(
-                        productResponse.id,
-                        productResponse.title,
-                        productResponse.description,
-                        // TODO: change with image response
-                        "tes",
-                        productResponse.brandId,
-                        productResponse.categoryId,
-                        productResponse.optimalPrice
                     )
 
                     emit(BaseResult.Success(product))

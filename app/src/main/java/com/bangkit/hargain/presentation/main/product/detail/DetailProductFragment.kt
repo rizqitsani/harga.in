@@ -30,8 +30,6 @@ class DetailProductFragment : Fragment() {
 
     private val viewModel: DetailProductViewModel by viewModels()
 
-    private val productId = "Tyt0EFSoW5vMTTg0tMk6"
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

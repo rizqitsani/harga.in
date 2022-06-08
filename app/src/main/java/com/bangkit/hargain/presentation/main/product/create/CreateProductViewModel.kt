@@ -21,9 +21,10 @@ class CreateProductViewModel @Inject constructor(
     private val productUseCase: ProductUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val brandUseCase: BrandUseCase
-    ): ViewModel() {
+) : ViewModel() {
 
-    private val state = MutableStateFlow<CreateProductFragmentState>(CreateProductFragmentState.Init)
+    private val state =
+        MutableStateFlow<CreateProductFragmentState>(CreateProductFragmentState.Init)
     val mState: StateFlow<CreateProductFragmentState> get() = state
 
     private val categories = MutableStateFlow<List<CategoryEntity>>(mutableListOf())
@@ -32,19 +33,19 @@ class CreateProductViewModel @Inject constructor(
     private val brands = MutableStateFlow<List<BrandEntity>>(mutableListOf())
     val mBrands: StateFlow<List<BrandEntity>> get() = brands
 
-    private fun setLoading(isLoading: Boolean){
+    private fun setLoading(isLoading: Boolean) {
         state.value = CreateProductFragmentState.IsLoading(isLoading)
     }
 
-    private fun showToast(message: String){
+    private fun showToast(message: String) {
         state.value = CreateProductFragmentState.ShowToast(message)
     }
 
-    private fun successCreate(){
+    private fun successCreate() {
         state.value = CreateProductFragmentState.SuccessCreate
     }
 
-    fun createProduct(productCreateRequest: ProductCreateRequest){
+    fun createProduct(productCreateRequest: ProductCreateRequest) {
         viewModelScope.launch {
             productUseCase.create(productCreateRequest)
                 .onStart {
@@ -56,7 +57,7 @@ class CreateProductViewModel @Inject constructor(
                 }
                 .collect { result ->
                     setLoading(false)
-                    when(result){
+                    when (result) {
                         is BaseResult.Success -> {
                             showToast("Product created.")
                             successCreate()
@@ -77,7 +78,7 @@ class CreateProductViewModel @Inject constructor(
                     showToast(exception.message.toString())
                 }
                 .collect { result ->
-                    when(result) {
+                    when (result) {
                         is BaseResult.Success -> {
                             categories.value = result.data
                         }
@@ -99,7 +100,7 @@ class CreateProductViewModel @Inject constructor(
                     showToast(exception.message.toString())
                 }
                 .collect { result ->
-                    when(result) {
+                    when (result) {
                         is BaseResult.Success -> {
                             brands.value = result.data
                         }
@@ -113,7 +114,7 @@ class CreateProductViewModel @Inject constructor(
 }
 
 sealed class CreateProductFragmentState {
-    object Init: CreateProductFragmentState()
+    object Init : CreateProductFragmentState()
     object SuccessCreate : CreateProductFragmentState()
     data class IsLoading(val isLoading: Boolean) : CreateProductFragmentState()
     data class ShowToast(val message: String) : CreateProductFragmentState()

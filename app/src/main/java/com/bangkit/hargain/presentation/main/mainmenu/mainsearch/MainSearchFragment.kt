@@ -46,17 +46,13 @@ class MainSearchFragment : Fragment() {
         binding?.createProductFab?.setOnClickListener {
             findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
         }
-        
+
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         setupRecyclerView()
         observe()
 
         viewModel.fetchProducts()
-
-//        binding?.createProductFab?.setOnClickListener {
-//            findNavController().navigate(R.id.action_mainSearchFragment_to_detailProductFragment)
-//        }
     }
 
     private fun observe() {

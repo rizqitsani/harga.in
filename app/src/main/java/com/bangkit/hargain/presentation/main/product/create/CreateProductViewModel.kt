@@ -62,7 +62,10 @@ class CreateProductViewModel @Inject constructor(
                             showToast("Product created.")
                             successCreate()
                         }
-                        is BaseResult.Error -> showToast(result.rawResponse.message)
+                        is BaseResult.Error -> {
+                            Log.w(TAG, result.rawResponse.message)
+                            showToast(result.rawResponse.message)
+                        }
                     }
                 }
         }

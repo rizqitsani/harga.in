@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,26 +27,32 @@ import com.bangkit.hargain.data.product.remote.dto.ProductCreateRequest
 import com.bangkit.hargain.databinding.FragmentCreateProductBinding
 import com.bangkit.hargain.domain.brand.entity.BrandEntity
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
-import com.bangkit.hargain.presentation.common.extension.TAG
-import com.bangkit.hargain.presentation.common.extension.gone
-import com.bangkit.hargain.presentation.common.extension.showToast
+import com.bangkit.hargain.presentation.common.extension.*
 import com.bangkit.hargain.presentation.common.helper.reduceFileImage
-import com.bangkit.hargain.presentation.common.extension.visible
 import com.bangkit.hargain.presentation.common.helper.rotateBitmap
 import com.bangkit.hargain.presentation.common.helper.uriToFile
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.bangkit.hargain.presentation.main.product.camera.CameraActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Tasks
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import okhttp3.internal.wait
 import java.io.File
+import java.io.FileInputStream
+import java.lang.Exception
 import java.net.URI
 import java.util.*
+import java.util.concurrent.ExecutionException
 import kotlin.collections.HashMap
 
 @AndroidEntryPoint
@@ -87,11 +94,12 @@ class CreateProductFragment : Fragment() {
 
         viewModel.getCategories()
         viewModel.getBrands()
+
         observe()
 
         binding?.cameraButton?.setOnClickListener { startCameraX() }
         binding?.galleryButton?.setOnClickListener { startGallery() }
-        binding?.saveButton?.setOnClickListener{ saveProduct() }
+        binding?.saveButton?.setOnClickListener{ runBlocking { saveProduct() } }
     }
 
     private fun createCategoryDropdown(categories: List<CategoryEntity>) {
@@ -116,26 +124,108 @@ class CreateProductFragment : Fragment() {
         binding?.brandInput?.setAdapter(arrayAdapter)
     }
 
-    private fun saveProduct() {
+    private suspend fun saveProduct() {
+
+        var dropdownValid = true
+        var categoryId: String? = ""
+        var brandId: String? = ""
+
         val title = binding?.nameInput?.text.toString().trim()
 
+
         val categoryValue = binding?.categoryInput?.text.toString()
-        val categoryId = categoriesMap.filterValues { it == categoryValue }.keys.first()
+        if(categoryValue.isNotEmpty()) {
+            categoryId = categoriesMap.filterValues { it == categoryValue }.keys.firstOrNull()
+        } else {
+            dropdownValid = false
+        }
+
         val brandValue = binding?.brandInput?.text.toString()
-        val brandId = brandsMap.filterValues { it == brandValue }.keys.first()
+        if(brandsValue.isNotEmpty()) {
+            brandId = brandsMap.filterValues { it == brandValue }.keys.firstOrNull()
+        } else {
+            dropdownValid = false
+        }
 
         val description = binding?.descriptionInput?.text.toString().trim()
-        val currentPrice = binding?.currentPriceInput?.text.toString().trim().toDouble()
-        val cost = binding?.costInput?.text.toString().trim().toDouble()
-        val startPrice = binding?.startPriceInput?.text.toString().trim().toDouble()
-        val endPrice = binding?.endPriceInput?.text.toString().trim().toDouble()
+        val currentPrice = binding?.currentPriceInput?.text.toString().trim().toDoubleOrNull()
+        val cost = binding?.costInput?.text.toString().trim().toDoubleOrNull()
+        val startPrice = binding?.startPriceInput?.text.toString().trim().toDoubleOrNull()
+        val endPrice = binding?.endPriceInput?.text.toString().trim().toDoubleOrNull()
 
-        viewModel.createProduct(
-            ProductCreateRequest(
-                    title, description, brandId, categoryId, currentPrice,
-                    cost, "ju", startPrice, endPrice
+        if (getFile != null && IMAGE_URL.isEmpty()) {
+            runBlocking {
+                val job: Job = lifecycleScope.launch(Dispatchers.Default) {
+                    getUrlUploadedImage()
+                }
+                job.join()
+            }
+        }
+
+        if(validate(
+                title, categoryValue, brandValue, description, currentPrice, cost, startPrice, endPrice, IMAGE_URL
+        ) and dropdownValid) {
+                viewModel.createProduct(
+                    ProductCreateRequest(
+                        title, description, brandId!!, categoryId!!, currentPrice!!,
+                        cost!!, IMAGE_URL, startPrice!!, endPrice!!
+                    )
                 )
-        )
+        }
+    }
+
+    private fun validate(title: String, categoryValue: String, brandValue: String, description: String,
+                         currentPrice: Double?, cost: Double?, startPrice: Double?, endPrice: Double?, imageUrl: String) : Boolean {
+        // reset all error
+        binding?.nameInput?.error = null
+        binding?.categoryInput?.error = null
+        binding?.brandInput?.error = null
+        binding?.descriptionInput?.error = null
+        binding?.currentPriceInput?.error = null
+        binding?.costInput?.error = null
+        binding?.startPriceInput?.error = null
+        binding?.endPriceInput?.error = null
+        binding?.imageErrorLabel?.invisible()
+
+        if(getFile == null || imageUrl.isEmpty()) {
+            binding?.imageErrorLabel?.visible()
+            return false
+        }
+        if(title.isEmpty()) {
+            binding?.nameInput?.error = "Title is required."
+            return false
+        }
+        if(categoryValue.isEmpty()) {
+            binding?.categoryInput?.error = "Category is required."
+            return false
+        }
+        if(brandValue.isEmpty()) {
+            binding?.brandInput?.error = "Brand is required."
+            return false
+        }
+        if(description.isEmpty()) {
+            binding?.descriptionInput?.error = "Description is required."
+            return false
+        }
+        if(currentPrice == null) {
+            binding?.currentPriceInput?.error = "Current price is required."
+            return false
+        }
+        if(cost == null) {
+            binding?.costInput?.error = "Cost is required."
+            return false
+        }
+        if(startPrice == null) {
+            binding?.startPriceInput?.error = "Start price is required."
+            return false
+        }
+        if(endPrice == null) {
+            binding?.endPriceInput?.error = "End price is required."
+            return false
+        }
+
+
+        return true
     }
 
     private fun observe(){
@@ -180,34 +270,42 @@ class CreateProductFragment : Fragment() {
         binding?.saveButton?.isEnabled = !isLoading
     }
 
-    private fun saveImage(){
-//        var storageRef = Firebase.storage.reference
+    private fun getUrlUploadedImage(): String {
+
         val file = reduceFileImage(getFile as File)
-//        val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-//
-//        storageRef.child(file.name).putFile(Uri.fromFile(file))
 
-        var imageUrl = ""
         val fileUri = Uri.fromFile(file)
-        if (fileUri != null) {
-            val fileName = UUID.randomUUID().toString() +".jpg"
+        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
-//            val database = FirebaseDatabase.getInstance()
-            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-
+        val task =
             refStorage.putFile(fileUri)
                 .addOnSuccessListener(
                     OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
                         taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                            imageUrl = it.toString()
+                            IMAGE_URL = it.toString()
+                            Toast.makeText(
+                                requireContext(),
+                                "addOnSuccessListener : ${IMAGE_URL}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     })
-                ?.addOnFailureListener(OnFailureListener { e ->
+                .addOnFailureListener(OnFailureListener { e ->
                     print(e.message)
+                    requireActivity().showToast("Upload image failed.")
                 })
 
-            Log.w(TAG, imageUrl)
-        }
+          try  {
+              Tasks.await(task)
+//              task.await()
+          } catch (e: ExecutionException) {
+              e.printStackTrace();
+          } catch (e: InterruptedException) {
+              e.printStackTrace();
+          }
+
+        return IMAGE_URL
     }
 
     //CameraLauncher
@@ -251,7 +349,6 @@ class CreateProductFragment : Fragment() {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
@@ -275,5 +372,7 @@ class CreateProductFragment : Fragment() {
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION)
         private const val REQUEST_CODE_PERMISSIONS = 10
+
+        private var IMAGE_URL = ""
     }
 }

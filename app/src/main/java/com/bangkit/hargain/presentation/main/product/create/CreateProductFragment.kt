@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -28,32 +27,17 @@ import com.bangkit.hargain.databinding.FragmentCreateProductBinding
 import com.bangkit.hargain.domain.brand.entity.BrandEntity
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.presentation.common.extension.*
-import com.bangkit.hargain.presentation.common.helper.reduceFileImage
 import com.bangkit.hargain.presentation.common.helper.rotateBitmap
 import com.bangkit.hargain.presentation.common.helper.uriToFile
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.bangkit.hargain.presentation.main.product.camera.CameraActivity
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Tasks
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import okhttp3.internal.wait
+import kotlinx.coroutines.runBlocking
 import java.io.File
-import java.io.FileInputStream
-import java.lang.Exception
 import java.net.URI
-import java.util.*
-import java.util.concurrent.ExecutionException
-import kotlin.collections.HashMap
 
 @AndroidEntryPoint
 class CreateProductFragment : Fragment() {
@@ -124,14 +108,13 @@ class CreateProductFragment : Fragment() {
         binding?.brandInput?.setAdapter(arrayAdapter)
     }
 
-    private suspend fun saveProduct() {
+    private fun saveProduct() {
 
         var dropdownValid = true
         var categoryId: String? = ""
         var brandId: String? = ""
 
         val title = binding?.nameInput?.text.toString().trim()
-
 
         val categoryValue = binding?.categoryInput?.text.toString()
         if(categoryValue.isNotEmpty()) {
@@ -153,29 +136,33 @@ class CreateProductFragment : Fragment() {
         val startPrice = binding?.startPriceInput?.text.toString().trim().toDoubleOrNull()
         val endPrice = binding?.endPriceInput?.text.toString().trim().toDoubleOrNull()
 
-        if (getFile != null && IMAGE_URL.isEmpty()) {
-            runBlocking {
-                val job: Job = lifecycleScope.launch(Dispatchers.Default) {
-                    getUrlUploadedImage()
-                }
-                job.join()
-            }
-        }
-
         if(validate(
-                title, categoryValue, brandValue, description, currentPrice, cost, startPrice, endPrice, IMAGE_URL
+                title, categoryValue, brandValue, description, currentPrice, cost, startPrice, endPrice
         ) and dropdownValid) {
-                viewModel.createProduct(
-                    ProductCreateRequest(
-                        title, description, brandId!!, categoryId!!, currentPrice!!,
-                        cost!!, IMAGE_URL, startPrice!!, endPrice!!
-                    )
-                )
+                viewModel.uploadImage(getFile as File)
+
+                viewModel.mImageUrl.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                    .onEach {
+                        if(it.isNotEmpty()) {
+                            Log.d(TAG, "posting product...")
+                            Log.d(TAG, "mImageUrl: ${it}")
+                            requireContext().showToast("posting product ...")
+                            viewModel.createProduct(
+                                ProductCreateRequest(
+                                    title, description, brandId!!, categoryId!!, currentPrice!!,
+                                    cost!!, it, startPrice!!, endPrice!!
+                                )
+                            )
+                        }
+                    }
+                    .launchIn(viewLifecycleOwner.lifecycleScope)
+
+
         }
     }
 
     private fun validate(title: String, categoryValue: String, brandValue: String, description: String,
-                         currentPrice: Double?, cost: Double?, startPrice: Double?, endPrice: Double?, imageUrl: String) : Boolean {
+                         currentPrice: Double?, cost: Double?, startPrice: Double?, endPrice: Double?) : Boolean {
         // reset all error
         binding?.nameInput?.error = null
         binding?.categoryInput?.error = null
@@ -187,7 +174,7 @@ class CreateProductFragment : Fragment() {
         binding?.endPriceInput?.error = null
         binding?.imageErrorLabel?.invisible()
 
-        if(getFile == null || imageUrl.isEmpty()) {
+        if(getFile == null) {
             binding?.imageErrorLabel?.visible()
             return false
         }
@@ -224,7 +211,6 @@ class CreateProductFragment : Fragment() {
             return false
         }
 
-
         return true
     }
 
@@ -246,6 +232,12 @@ class CreateProductFragment : Fragment() {
                 createBrandDropdown(brands)
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.mImageUrl
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { url ->
+                saveProduct()
+            }
     }
 
     private fun handleState(state: CreateProductFragmentState){
@@ -268,44 +260,6 @@ class CreateProductFragment : Fragment() {
         }
 
         binding?.saveButton?.isEnabled = !isLoading
-    }
-
-    private fun getUrlUploadedImage(): String {
-
-        val file = reduceFileImage(getFile as File)
-
-        val fileUri = Uri.fromFile(file)
-        val fileName = UUID.randomUUID().toString() + ".jpg"
-        val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-
-        val task =
-            refStorage.putFile(fileUri)
-                .addOnSuccessListener(
-                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                            IMAGE_URL = it.toString()
-                            Toast.makeText(
-                                requireContext(),
-                                "addOnSuccessListener : ${IMAGE_URL}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    })
-                .addOnFailureListener(OnFailureListener { e ->
-                    print(e.message)
-                    requireActivity().showToast("Upload image failed.")
-                })
-
-          try  {
-              Tasks.await(task)
-//              task.await()
-          } catch (e: ExecutionException) {
-              e.printStackTrace();
-          } catch (e: InterruptedException) {
-              e.printStackTrace();
-          }
-
-        return IMAGE_URL
     }
 
     //CameraLauncher

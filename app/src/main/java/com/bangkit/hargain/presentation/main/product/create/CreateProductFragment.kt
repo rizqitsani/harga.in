@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,10 @@ import com.bangkit.hargain.data.product.remote.dto.ProductCreateRequest
 import com.bangkit.hargain.databinding.FragmentCreateProductBinding
 import com.bangkit.hargain.domain.brand.entity.BrandEntity
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
-import com.bangkit.hargain.presentation.common.extension.*
+import com.bangkit.hargain.presentation.common.extension.gone
+import com.bangkit.hargain.presentation.common.extension.invisible
+import com.bangkit.hargain.presentation.common.extension.showToast
+import com.bangkit.hargain.presentation.common.extension.visible
 import com.bangkit.hargain.presentation.common.helper.rotateBitmap
 import com.bangkit.hargain.presentation.common.helper.uriToFile
 import com.bangkit.hargain.presentation.main.MainActivity
@@ -144,9 +146,6 @@ class CreateProductFragment : Fragment() {
                 viewModel.mImageUrl.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                     .onEach {
                         if(it.isNotEmpty()) {
-                            Log.d(TAG, "posting product...")
-                            Log.d(TAG, "mImageUrl: ${it}")
-                            requireContext().showToast("posting product ...")
                             viewModel.createProduct(
                                 ProductCreateRequest(
                                     title, description, brandId!!, categoryId!!, currentPrice!!,

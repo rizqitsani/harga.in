@@ -88,12 +88,11 @@ class CreateProductViewModel @Inject constructor(
         val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
         viewModelScope.launch {
+            setLoading(true)
             refStorage.putFile(fileUri)
                 .addOnSuccessListener { task ->
                     task.storage.downloadUrl.addOnSuccessListener {
                         imageUrl.value = it.toString()
-                        Log.d(TAG, it.toString())
-                        showToast("addOnSuccessListener : ${it.toString()}")
                     }
                 }
                 .addOnFailureListener { e ->
@@ -101,19 +100,6 @@ class CreateProductViewModel @Inject constructor(
                     showToast("Upload image failed.")
                     Log.d(TAG, "Upload image failed.")
                 }
-//                .addOnSuccessListener(
-//                    OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-//                        taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-//                            imageUrl.value = it.toString()
-//                            showToast("addOnSuccessListener : $imageUrl")
-//                            Log.d(TAG, "addOnSuccessListener : $imageUrl")
-//                        }
-//                    })
-//                .addOnFailureListener(OnFailureListener { e ->
-//                    print(e.message)
-//                    showToast("Upload image failed.")
-//                    Log.d(TAG, "Upload image failed.")
-//                })
         }
     }
 

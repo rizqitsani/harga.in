@@ -16,12 +16,13 @@ import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(private val productApi: ProductApi) :
     ProductRepository {
+
     override suspend fun getAllProduct(): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
         return flow {
             val response = productApi.getAllProducts()
             if (response.isSuccessful) {
                 val body = response.body()
-                val products = mutableListOf<ProductEntity>()
+                val products = mutableListOf< ProductEntity>()
                 body?.data?.forEach { productResponse ->
                     products.add(
                         ProductEntity( // TODO benerin argumen
@@ -35,7 +36,8 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                             productResponse.optimalPrice,
                             productResponse.optimalPrice,
                             productResponse.optimalPrice,
-                            productResponse.optimalPrice
+                            productResponse.optimalPrice,
+                            productResponse.PricePredictions
                         )
                     )
                 }
@@ -70,7 +72,8 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.optimalPrice,
                         productResponse.cost,
                         productResponse.startPrice,
-                        productResponse.endPrice
+                        productResponse.endPrice,
+                        productResponse.PricePrediction
                     )
 
                     emit(BaseResult.Success(product))
@@ -101,7 +104,8 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                     data.optimalPrice,
                     data.cost,
                     data.startPrice,
-                    data.endPrice
+                    data.endPrice,
+                    data.PricePrediction
                 )
                 emit(BaseResult.Success(product))
             } else {
@@ -132,7 +136,8 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.optimalPrice,
                         productResponse.cost,
                         productResponse.startPrice,
-                        productResponse.endPrice
+                        productResponse.endPrice,
+                        productResponse.PricePrediction
                     )
 
                     emit(BaseResult.Success(product))

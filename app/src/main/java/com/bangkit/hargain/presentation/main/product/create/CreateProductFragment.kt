@@ -181,18 +181,13 @@ class CreateProductFragment : Fragment() {
     }
 
     private fun saveImage(){
-//        var storageRef = Firebase.storage.reference
         val file = reduceFileImage(getFile as File)
-//        val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-//
-//        storageRef.child(file.name).putFile(Uri.fromFile(file))
 
         var imageUrl = ""
         val fileUri = Uri.fromFile(file)
         if (fileUri != null) {
             val fileName = UUID.randomUUID().toString() +".jpg"
 
-//            val database = FirebaseDatabase.getInstance()
             val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
 
             refStorage.putFile(fileUri)
@@ -210,7 +205,6 @@ class CreateProductFragment : Fragment() {
         }
     }
 
-    //CameraLauncher
     private fun startCameraX() {
         val intent = Intent(activity, CameraActivity::class.java)
         launcherIntentCameraX.launch(intent)

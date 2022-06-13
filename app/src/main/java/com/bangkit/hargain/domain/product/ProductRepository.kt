@@ -13,4 +13,5 @@ interface ProductRepository {
     suspend fun getProductDetail(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>>
     suspend fun createProduct(productCreateRequest: ProductCreateRequest) : Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>>
     suspend fun deleteProduct(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>>
+
 }

@@ -3,6 +3,7 @@ package com.bangkit.hargain.presentation.main.product.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bangkit.hargain.domain.product.entity.PricePredictionEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.domain.product.usecase.ProductUseCase
 import com.bangkit.hargain.presentation.common.base.BaseResult
@@ -19,6 +20,7 @@ class DetailProductViewModel @Inject constructor(private val productUseCase: Pro
     private val state =
         MutableStateFlow<DetailProductFragmentState>(DetailProductFragmentState.Init)
     val mState: StateFlow<DetailProductFragmentState> get() = state
+
 
     private val product = MutableStateFlow<ProductEntity?>(null)
     val mProduct: StateFlow<ProductEntity?> get() = product

@@ -1,6 +1,6 @@
 package com.bangkit.hargain.domain.product.entity
 
-import com.google.gson.annotations.SerializedName
+import com.bangkit.hargain.data.product.remote.dto.PricePrediction
 
 data class ProductEntity(
     var id: String,
@@ -14,4 +14,5 @@ data class ProductEntity(
     var cost: Double,
     var startPrice: Double,
     var endPrice: Double,
+    var PricePrediction: List<PricePrediction>
 )

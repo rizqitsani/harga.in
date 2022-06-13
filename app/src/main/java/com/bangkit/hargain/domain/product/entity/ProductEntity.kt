@@ -14,5 +14,5 @@ data class ProductEntity(
     var cost: Double,
     var startPrice: Double,
     var endPrice: Double,
-    var PricePrediction: List<PricePrediction>
+    var pricePredictions: List<PricePrediction>
 )

@@ -105,7 +105,7 @@ class DetailProductFragment : Fragment() {
         binding?.tvKategori?.text = product.categoryId
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandId
-        binding?.sellingPriceTV?.text = product.PricePrediction[1].sellingPrice.toString()
+        binding?.sellingPriceTV?.text = product.currentPrice.toString()
 
     }
 

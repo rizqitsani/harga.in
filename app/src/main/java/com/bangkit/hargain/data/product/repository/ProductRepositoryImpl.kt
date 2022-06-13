@@ -73,7 +73,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.cost,
                         productResponse.startPrice,
                         productResponse.endPrice,
-                        productResponse.PricePrediction
+                        productResponse.pricePredictions
                     )
 
                     emit(BaseResult.Success(product))
@@ -105,7 +105,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                     data.cost,
                     data.startPrice,
                     data.endPrice,
-                    data.PricePrediction
+                    data.pricePredictions
                 )
                 emit(BaseResult.Success(product))
             } else {
@@ -137,7 +137,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.cost,
                         productResponse.startPrice,
                         productResponse.endPrice,
-                        productResponse.PricePrediction
+                        productResponse.pricePredictions
                     )
 
                     emit(BaseResult.Success(product))

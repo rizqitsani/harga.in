@@ -1,15 +1,14 @@
 package com.bangkit.hargain.data.product.remote.dto
 
-import com.bangkit.hargain.domain.product.entity.PricePredictionEntity
 import com.google.gson.annotations.SerializedName
 
 
 data class PricePrediction(
-    @field:SerializedName("sellingPrice")
+    @SerializedName("selling_price")
     val sellingPrice: Double,
-    @field:SerializedName("totalProfit")
+    @SerializedName("total_profit")
     val totalProfit: Double,
-    @field:SerializedName("totalSales")
+    @SerializedName("total_sales")
     val totalSales: Double,
 )
 

@@ -47,7 +47,9 @@
     <string name="save">Save</string>
     <string name="title_activity_testing">TestingActivity</string>
     <string name="cost">Cost</string>
-    <string name="start_price">Start Price</string>
-    <string name="end_price">End Price</string>
+    <string name="start_price_prediction">Start Price for Prediction</string>
+    <string name="end_price_prediction">End Price for Prediction</string>
     <string name="delete">Hapus</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="image_is_required">Image is required</string>
 </resources>

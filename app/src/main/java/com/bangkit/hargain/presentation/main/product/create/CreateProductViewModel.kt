@@ -1,5 +1,6 @@
 package com.bangkit.hargain.presentation.main.product.create
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,9 +12,13 @@ import com.bangkit.hargain.domain.category.usecase.GetAllCategoriesUseCase
 import com.bangkit.hargain.domain.product.usecase.ProductUseCase
 import com.bangkit.hargain.presentation.common.base.BaseResult
 import com.bangkit.hargain.presentation.common.extension.TAG
+import com.bangkit.hargain.presentation.common.helper.reduceFileImage
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,6 +37,9 @@ class CreateProductViewModel @Inject constructor(
 
     private val brands = MutableStateFlow<List<BrandEntity>>(mutableListOf())
     val mBrands: StateFlow<List<BrandEntity>> get() = brands
+
+    private val imageUrl = MutableStateFlow<String>("")
+    val mImageUrl: StateFlow<String> get() = imageUrl
 
     private fun setLoading(isLoading: Boolean) {
         state.value = CreateProductFragmentState.IsLoading(isLoading)
@@ -62,8 +70,35 @@ class CreateProductViewModel @Inject constructor(
                             showToast("Product created.")
                             successCreate()
                         }
-                        is BaseResult.Error -> showToast(result.rawResponse.message)
+                        is BaseResult.Error -> {
+                            Log.w(TAG, result.rawResponse.message)
+                            showToast(result.rawResponse.message)
+                        }
                     }
+                }
+        }
+    }
+
+    fun uploadImage(getFile: File) {
+
+        val file = reduceFileImage(getFile)
+
+        val fileUri = Uri.fromFile(file)
+        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
+
+        viewModelScope.launch {
+            setLoading(true)
+            refStorage.putFile(fileUri)
+                .addOnSuccessListener { task ->
+                    task.storage.downloadUrl.addOnSuccessListener {
+                        imageUrl.value = it.toString()
+                    }
+                }
+                .addOnFailureListener { e ->
+                    print(e.message)
+                    showToast("Upload image failed.")
+                    Log.d(TAG, "Upload image failed.")
                 }
         }
     }
@@ -111,6 +146,7 @@ class CreateProductViewModel @Inject constructor(
                 }
         }
     }
+
 }
 
 sealed class CreateProductFragmentState {

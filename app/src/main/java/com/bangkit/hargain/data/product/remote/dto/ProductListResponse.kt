@@ -4,14 +4,7 @@ import com.bangkit.hargain.domain.product.entity.PricePredictionEntity
 import com.google.gson.annotations.SerializedName
 
 
-data class PricePrediction(
-    @field:SerializedName("sellingPrice")
-    val sellingPrice: Double,
-    @field:SerializedName("totalProfit")
-    val totalProfit: Double,
-    @field:SerializedName("totalSales")
-    val totalSales: Double,
-)
+
 
 data class ProductListResponse(
 

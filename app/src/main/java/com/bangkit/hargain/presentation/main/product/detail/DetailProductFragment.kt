@@ -101,11 +101,11 @@ class DetailProductFragment : Fragment() {
         }
 
         binding?.productName?.text = product.title
-        binding?.price?.text = product.optimalPrice.toString()
+        binding?.price?.text = product.currentPrice.toString()
         binding?.tvKategori?.text = product.categoryId
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandId
-        binding?.sellingPriceTV?.text = product.PricePrediction[1].sellingPrice.toString()
+
 
     }
 

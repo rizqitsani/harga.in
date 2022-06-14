@@ -3,6 +3,15 @@ package com.bangkit.hargain.data.product.remote.dto
 import com.bangkit.hargain.domain.product.entity.PricePredictionEntity
 import com.google.gson.annotations.SerializedName
 
+data class PricePrediction(
+    @SerializedName("sellingPrice")
+    val sellingPrice: Double,
+    @SerializedName("totalProfit")
+    val totalProfit: Double,
+    @SerializedName("totalSales")
+    val totalSales: Double,
+)
+
 data class ProductResponse(
     @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,

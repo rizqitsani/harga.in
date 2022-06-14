@@ -1,7 +1,7 @@
 package com.bangkit.hargain.domain.login.entity
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoginEntity(

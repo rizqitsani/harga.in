@@ -1,202 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.main.product.detail.DetailProductFragment">
+    tools:context=".presentation.main.product.detail.DetailProductFragment" >
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_round_arrow_back_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/bangkit_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonDelete"
-        style="@style/iconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        app:icon="@drawable/ic_baseline_delete_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/productName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/product_name"
-        android:textAppearance="@android:style/TextAppearance.Material"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/buttonBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_round_arrow_back_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/product_price"
-        android:textAppearance="@android:style/TextAppearance.Material"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/productName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/productName"
-        app:layout_constraintTop_toBottomOf="@+id/productName" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/bangkit_logo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@id/price"
-        app:layout_constraintTop_toBottomOf="@id/price">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDelete"
+                style="@style/iconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                app:icon="@drawable/ic_baseline_delete_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textKategori"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/kategori"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/product_name"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-        <TextView
-            android:id="@+id/textDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Deskripsi"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textKategori"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textKategori"
-            app:layout_constraintTop_toBottomOf="@+id/textKategori" />
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/product_price"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/productName"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/productName"
+                app:layout_constraintTop_toBottomOf="@+id/productName" />
 
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Deskripsi"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textDescription"
-            app:layout_constraintTop_toTopOf="@+id/textDescription" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="@id/price"
+                app:layout_constraintTop_toBottomOf="@id/price">
 
-        <TextView
-            android:id="@+id/tvMerk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/merk"
-            app:layout_constraintBottom_toBottomOf="@+id/textMerk"
+                <TextView
+                    android:id="@+id/textKategori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/kategori"
+                    android:textAppearance="@android:style/TextAppearance.Material"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            app:layout_constraintStart_toStartOf="@+id/tvDescription"
-            app:layout_constraintTop_toTopOf="@+id/textMerk"
-            app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Deskripsi"
+                    android:textAppearance="@android:style/TextAppearance.Material"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/textKategori"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textKategori"
+                    app:layout_constraintTop_toBottomOf="@+id/textKategori" />
 
-        <TextView
-            android:id="@+id/textMerk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Merk"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textDescription"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textDescription"
-            app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Deskripsi"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textDescription"
+                    app:layout_constraintTop_toTopOf="@+id/textDescription" />
 
-        <TextView
-            android:id="@+id/tvKategori"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/kategori"
-            app:layout_constraintBottom_toBottomOf="@+id/textKategori"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.019"
-            app:layout_constraintStart_toEndOf="@id/textKategori"
-            app:layout_constraintTop_toTopOf="@id/textKategori"
-            app:layout_constraintVertical_bias="1.0" />
+                <TextView
+                    android:id="@+id/tvMerk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/merk"
+                    app:layout_constraintBottom_toBottomOf="@+id/textMerk"
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintStart_toStartOf="@+id/tvDescription"
+                    app:layout_constraintTop_toTopOf="@+id/textMerk"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textMerk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Merk"
+                    android:textAppearance="@android:style/TextAppearance.Material"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/textDescription"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textDescription"
+                    app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+
+                <TextView
+                    android:id="@+id/tvKategori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/kategori"
+                    app:layout_constraintBottom_toBottomOf="@+id/textKategori"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.019"
+                    app:layout_constraintStart_toEndOf="@id/textKategori"
+                    app:layout_constraintTop_toTopOf="@id/textKategori"
+                    app:layout_constraintVertical_bias="1.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/salesPredictionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="15dp"
+                android:text="Sales Prediction"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textStyle="bold"
+                android:textColor="@color/neutral_60"
+                app:layout_constraintTop_toBottomOf="@+id/layoutDescription" />
+
+            <LinearLayout
+                android:id="@+id/salesPrediction"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/salesPredictionTextView">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartSales"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="9dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/profitPredictionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="15dp"
+                android:text="Profit Prediction"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textStyle="bold"
+                android:textColor="@color/neutral_60"
+                app:layout_constraintTop_toBottomOf="@+id/salesPrediction" />
+
+            <LinearLayout
+                android:id="@+id/profitPrediction"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profitPredictionTextView">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartProfit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="9dp" />
+            </LinearLayout>
 
 
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/edit_product"
+                app:layout_constraintTop_toBottomOf="@id/profitPrediction"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                />
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/buttonEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/edit_product"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible"
+        android:layout_centerInParent="true"
         tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutPrediction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/layoutDescription"
-        app:layout_constraintTop_toBottomOf="@+id/layoutDescription">
-        <TextView
-            android:id="@+id/sellingPriceTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selling Price"
-            app:layout_constraintStart_toStartOf="@id/layoutPrediction"
-            app:layout_constraintTop_toTopOf="@id/layoutPrediction"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

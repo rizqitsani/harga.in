@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -32,7 +33,6 @@ import java.util.*
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import kotlinx.android.synthetic.main.fragment_detail_product.*
 
 @AndroidEntryPoint
 class DetailProductFragment : Fragment() {
@@ -85,8 +85,18 @@ class DetailProductFragment : Fragment() {
         viewModel.mProduct
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { product ->
-                if (product !== null)
+                if (product !== null) {
                     handleProductDetail(product)
+                    binding?.buttonEdit?.setOnClickListener {
+                        val bundle = bundleOf("product" to product)
+                        findNavController().navigate(
+                            R.id.action_detailProductFragment_to_updateProductFragment,
+                            bundle
+                        )
+                    }
+                }
+
+
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }

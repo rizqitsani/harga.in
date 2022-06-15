@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:paddingVertical="@dimen/activity_vertical_margin"
             tools:context=".presentation.main.product.create.CreateProductFragment">
@@ -48,7 +52,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -89,31 +95,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/currentPriceTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/current_price"
-                app:layout_constraintTop_toBottomOf="@id/descriptionTextField">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/currentPriceInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/costTextField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="@string/cost"
-                app:layout_constraintTop_toBottomOf="@id/currentPriceTextField">
+                app:layout_constraintTop_toBottomOf="@id/descriptionTextField">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -164,24 +152,26 @@
                 android:id="@+id/uploadImageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="@string/upload_image"
-                android:textAppearance="@style/TextAppearance.Hargain.Body1"
-                android:textColor="@color/neutral_80"
+                app:layout_constraintTop_toBottomOf="@id/endPriceTextField"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/endPriceTextField" />
+                android:textAppearance="@style/TextAppearance.Hargain.Body1"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/neutral_80"
+                />
 
             <TextView
                 android:id="@+id/imageErrorLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/image_is_required"
+                app:layout_constraintTop_toBottomOf="@id/uploadImageTextView"
+                app:layout_constraintStart_toStartOf="parent"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                 android:textColor="@color/red"
                 android:textStyle="italic"
                 android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/uploadImageTextView" />
+                />
 
             <ImageView
                 android:id="@+id/previewImageView"

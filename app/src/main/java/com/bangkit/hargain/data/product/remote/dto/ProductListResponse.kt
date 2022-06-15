@@ -1,8 +1,10 @@
 package com.bangkit.hargain.data.product.remote.dto
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class PricePrediction(
     @SerializedName("selling_price")
     val sellingPrice: Double,
@@ -10,7 +12,7 @@ data class PricePrediction(
     val totalProfit: Double,
     @SerializedName("total_sales")
     val totalSales: Double,
-)
+) : Parcelable
 
 data class ProductListResponse(
 
@@ -30,7 +32,7 @@ data class ProductListResponse(
     val optimalPrice: Double,
 
     @field:SerializedName("pricePredictions")
-    val PricePredictions: List<PricePrediction> ,
+    val PricePredictions: List<PricePrediction>,
 
     @field:SerializedName("description")
     val description: String,

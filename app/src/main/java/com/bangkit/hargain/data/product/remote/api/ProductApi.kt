@@ -36,8 +36,8 @@ interface ProductApi {
 
     @PUT("products/{id}")
     suspend fun updateProduct(
-        @Body productUpdateRequest: ProductUpdateRequest,
-        @Path("id") id: String
+        @Path("id") id: String,
+        @Body productUpdateRequest: ProductUpdateRequest
     ): Response<WrappedResponse<ProductResponse>>
 
     @DELETE("products/{id}")

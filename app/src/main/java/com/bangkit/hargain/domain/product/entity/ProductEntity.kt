@@ -1,7 +1,10 @@
 package com.bangkit.hargain.domain.product.entity
 
+import android.os.Parcelable
 import com.bangkit.hargain.data.product.remote.dto.PricePrediction
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class ProductEntity(
     var id: String,
     var title: String,
@@ -15,4 +18,4 @@ data class ProductEntity(
     var startPrice: Double,
     var endPrice: Double,
     var pricePredictions: List<PricePrediction>
-)
+) : Parcelable

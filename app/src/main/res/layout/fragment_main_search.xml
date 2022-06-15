@@ -53,6 +53,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/SearchViewProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:iconifiedByDefault="false"
+        android:padding="4dp"
+        android:queryHint="@string/search_product" />
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"

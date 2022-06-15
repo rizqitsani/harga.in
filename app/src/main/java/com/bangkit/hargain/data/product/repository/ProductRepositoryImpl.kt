@@ -53,6 +53,43 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
         }
     }
 
+    override suspend fun getSearchedProduct(productId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+        return flow {
+            val response = productApi.getProductByTitle(productId)
+            if (response.isSuccessful) {
+                val body = response.body()
+                val products = mutableListOf< ProductEntity>()
+                body?.data?.forEach { productResponse ->
+                    products.add(
+                        ProductEntity( // TODO benerin argumen
+                            productResponse.productId,
+                            productResponse.title,
+                            productResponse.description,
+                            productResponse.image,
+                            "",
+                            "",
+                            0.toDouble(),
+                            productResponse.optimalPrice,
+                            productResponse.optimalPrice,
+                            productResponse.optimalPrice,
+                            productResponse.optimalPrice,
+                            productResponse.PricePredictions
+                        )
+                    )
+                }
+
+
+                emit(BaseResult.Success(products))
+            } else {
+                val type = object : TypeToken<WrappedResponse<ProductListResponse>>() {}.type
+                val err = Gson().fromJson<WrappedResponse<ProductListResponse>>(
+                    response.errorBody()!!.charStream(), type
+                )!!
+                emit(BaseResult.Error(err))
+            }
+        }
+    }
+
     override suspend fun getProductDetail(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
         return flow {
             val response = productApi.getProductById(productId)

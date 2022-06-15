@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -53,6 +54,23 @@ class MainSearchFragment : Fragment() {
         observe()
 
         viewModel.fetchProducts()
+
+        val searchView = binding?.SearchViewProduct as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchProducts(query as String)
+                binding?.SearchViewProduct?.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText == ""){
+                    viewModel.fetchProducts()
+                }
+                return true
+            }
+        })
+
     }
 
     private fun observe() {

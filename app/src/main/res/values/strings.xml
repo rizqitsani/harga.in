@@ -52,4 +52,5 @@
     <string name="delete">Hapus</string>
     <string name="upload_image">Upload Image</string>
     <string name="image_is_required">Image is required</string>
+    <string name="search_product">Find Product</string>
 </resources>

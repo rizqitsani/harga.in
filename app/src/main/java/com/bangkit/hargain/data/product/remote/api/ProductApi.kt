@@ -18,6 +18,11 @@ interface ProductApi {
         @Path("id") id: String
     ): Response<WrappedResponse<ProductResponse>>
 
+    @GET("products/search/{title}")
+    suspend fun getProductByTitle(
+        @Query("title") title: String
+    ): Response<WrappedListResponse<ProductListResponse>>
+
     @POST("products")
     suspend fun createProduct(
         @Body productCreateRequest: ProductCreateRequest

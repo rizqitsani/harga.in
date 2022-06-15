@@ -35,6 +35,30 @@ class MainSearchViewModel @Inject constructor(private val productUseCase: Produc
         state.value = MainSearchFragmentState.ShowToast(message)
     }
 
+    fun searchProducts(productId: String) {
+        viewModelScope.launch {
+            productUseCase.getSearched(productId)
+                .onStart {
+                    setLoading(true)
+                }
+                .catch { exception ->
+                    setLoading(false)
+                    Log.w(TAG, "fetchSearchedProduct:failure", exception)
+                    showToast(exception.message.toString())
+                }
+                .collect { result ->
+                    setLoading(false)
+                    when (result) {
+                        is BaseResult.Success -> {
+                            products.value = result.data
+                        }
+                        is BaseResult.Error -> {
+                            showToast(result.rawResponse.message)
+                        }
+                    }
+                }
+        }
+    }
     fun fetchProducts() {
         viewModelScope.launch {
             productUseCase.getAll()

@@ -31,6 +31,9 @@
             android:name="categoryId"
             app:argType="string"
             android:defaultValue=""/>
+        <argument android:name="categoryName"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

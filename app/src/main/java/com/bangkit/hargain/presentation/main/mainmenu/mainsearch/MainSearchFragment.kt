@@ -1,5 +1,6 @@
 package com.bangkit.hargain.presentation.main.mainmenu.mainsearch
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -38,12 +39,14 @@ class MainSearchFragment : Fragment()  {
 
     private var searchQuery: String = ""
     private var categoryIdQuery: String = ""
+    private var categoryNameArgs: String = ""
 
     private lateinit var categoriesOriginal: List<CategoryEntity>
 
     private var categoriesValue: MutableList<String> = mutableListOf()
     private lateinit var categoriesValueArray: Array<String>
     private var checkedCategoryIndex = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,16 +62,17 @@ class MainSearchFragment : Fragment()  {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         categoryIdQuery = MainSearchFragmentArgs.fromBundle(arguments as Bundle).categoryId
+        categoryNameArgs = MainSearchFragmentArgs.fromBundle(arguments as Bundle).categoryName
 
         setupRecyclerView()
+
+        viewModel.getCategories()
 
         if (categoryIdQuery.isEmpty()) {
             viewModel.fetchProducts()
         } else {
             viewModel.searchProducts(searchQuery, categoryIdQuery)
         }
-
-        viewModel.getCategories()
 
         observe()
 
@@ -99,6 +103,13 @@ class MainSearchFragment : Fragment()  {
     }
 
     private fun showCategoryFilterDialog() {
+        if(categoryNameArgs.isNotEmpty()) {
+            categoriesValueArray.forEachIndexed { index, s ->
+                if(s == categoryNameArgs) {
+                    checkedCategoryIndex = index
+                }
+            }
+        }
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Choose Category")
             .setNeutralButton("Cancel") { dialog, which ->
@@ -117,6 +128,7 @@ class MainSearchFragment : Fragment()  {
                 viewModel.searchProducts(searchQuery, categoryIdQuery)
             }
             .setSingleChoiceItems(categoriesValueArray, checkedCategoryIndex) { dialog, which ->
+                context?.showToast(checkedCategoryIndex.toString())
                 checkedCategoryIndex = which
             }
             .show()

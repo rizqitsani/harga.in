@@ -18,10 +18,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.FragmentMainSearchBinding
+import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.launchIn
@@ -41,6 +43,8 @@ class MainSearchFragment : Fragment()  {
     private var searchQuery: String = ""
     private var categoryIdQuery: String = ""
 
+    private lateinit var categories: List<CategoryEntity>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,11 +59,15 @@ class MainSearchFragment : Fragment()  {
         binding?.createProductFab?.setOnClickListener {
             findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
         }
+        binding?.filterButton?.setOnClickListener {
+            showCategoryFilterDialog()
+        }
 
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         setupRecyclerView()
         observe()
+
         val searchView = binding?.SearchViewProduct as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -82,13 +90,32 @@ class MainSearchFragment : Fragment()  {
 
     }
 
+    private fun showCategoryFilterDialog() {
+        val singleItems = arrayOf("Item 1", "Item 2", "Item 3")
+        val checkedItem = 1
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Choose Category")
+            .setNeutralButton("Cancel") { dialog, which ->
+                // Respond to neutral button press
+            }
+            .setPositiveButton("Ok") { dialog, which ->
+                // Respond to positive button press
+            }
+            // Single-choice items (initialized with checked item)
+            .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
+                // Respond to item chosen
+            }
+            .show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-
     private fun observe() {
         observeState()
+        observeProducts()
         observeCategories()
     }
 
@@ -101,11 +128,20 @@ class MainSearchFragment : Fragment()  {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun observeCategories() {
+    private fun observeProducts() {
         viewModel.mProducts
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { products ->
                 handleProducts(products)
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun observeCategories() {
+        viewModel.mCategories
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { categories ->
+                handleCategories(categories)
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -124,6 +160,10 @@ class MainSearchFragment : Fragment()  {
                 it.setProducts(products)
             }
         }
+    }
+
+    private fun handleCategories(categories: List<CategoryEntity>) {
+        this.categories = categories
     }
 
     private fun handleLoading(isLoading: Boolean) {

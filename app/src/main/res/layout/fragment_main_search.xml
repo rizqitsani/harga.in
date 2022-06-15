@@ -11,15 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/SearchViewProduct"
-            android:layout_width="400dp"
+        <LinearLayout
+            android:id="@+id/searchFilterLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/SearchViewProduct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                />
+
+            <ImageButton
+                android:id="@+id/filterButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_filter_list_24"
+                android:layout_weight="0.1"
+                />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textPlaceholder"
@@ -42,7 +56,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@id/SearchViewProduct"
+            app:layout_constraintTop_toBottomOf="@id/searchFilterLayout"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

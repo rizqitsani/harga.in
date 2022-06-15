@@ -53,9 +53,9 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
         }
     }
 
-    override suspend fun getSearchedProduct(title: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+    override suspend fun getSearchedProduct(title: String, categoryId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
         return flow {
-            val response = productApi.getProductByTitle(title)
+            val response = productApi.searchProducts(title, categoryId)
             if (response.isSuccessful) {
                 val body = response.body()
                 val products = mutableListOf< ProductEntity>()

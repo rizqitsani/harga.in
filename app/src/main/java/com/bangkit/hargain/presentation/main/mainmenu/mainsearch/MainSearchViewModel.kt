@@ -35,9 +35,9 @@ class MainSearchViewModel @Inject constructor(private val productUseCase: Produc
         state.value = MainSearchFragmentState.ShowToast(message)
     }
 
-    fun searchProducts(title: String) {
+    fun searchProducts(title: String, categoryId: String) {
         viewModelScope.launch {
-            productUseCase.getSearched(title)
+            productUseCase.getSearched(title, categoryId)
                 .onStart {
                     setLoading(true)
                 }

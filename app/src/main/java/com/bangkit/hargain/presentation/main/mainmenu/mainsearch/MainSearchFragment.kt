@@ -38,6 +38,9 @@ class MainSearchFragment : Fragment()  {
 
     private lateinit var productsAdapter: ProductAdapter
 
+    private var searchQuery: String = ""
+    private var categoryIdQuery: String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +63,8 @@ class MainSearchFragment : Fragment()  {
         val searchView = binding?.SearchViewProduct as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.searchProducts(query as String)
+                searchQuery = query as String
+                viewModel.searchProducts(searchQuery, categoryIdQuery)
 
                 searchView.clearFocus()
                 return true

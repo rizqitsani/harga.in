@@ -13,6 +13,12 @@ interface ProductApi {
     @GET("products")
     suspend fun getAllProducts(): Response<WrappedListResponse<ProductListResponse>>
 
+    @GET("products")
+    suspend fun searchProducts(
+        @Query("title") title: String,
+        @Query("category") categoryId: String
+    ): Response<WrappedListResponse<ProductListResponse>>
+
     @GET("products/{id}")
     suspend fun getProductById(
         @Path("id") id: String
@@ -20,7 +26,7 @@ interface ProductApi {
 
     @GET("products/search/{title}")
     suspend fun getProductByTitle(
-        @Query("q") title: String
+        @Path("title") title: String
     ): Response<WrappedListResponse<ProductListResponse>>
 
     @POST("products")

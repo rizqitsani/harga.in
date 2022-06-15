@@ -13,7 +13,8 @@
         android:id="@+id/mainSearchFragment"
         android:icon="@drawable/ic_search_24"
         android:title="@string/title_search"
-
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"
         />
 
     <item

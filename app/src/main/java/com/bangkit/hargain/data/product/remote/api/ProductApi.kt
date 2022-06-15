@@ -20,7 +20,7 @@ interface ProductApi {
 
     @GET("products/search/{title}")
     suspend fun getProductByTitle(
-        @Query("title") title: String
+        @Query("q") title: String
     ): Response<WrappedListResponse<ProductListResponse>>
 
     @POST("products")

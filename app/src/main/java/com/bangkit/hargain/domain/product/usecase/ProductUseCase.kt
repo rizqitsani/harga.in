@@ -16,8 +16,8 @@ class ProductUseCase @Inject constructor(private val productRepository: ProductR
         return productRepository.createProduct(productCreateRequest)
     }
 
-    suspend fun getSearched(productId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
-        return productRepository.getSearchedProduct(productId)
+    suspend fun getSearched(title: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+        return productRepository.getSearchedProduct(title)
     }
 
     suspend fun getAll(): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {

@@ -1,7 +1,7 @@
 package com.bangkit.hargain.data.product.remote.dto
 
-
 import com.google.gson.annotations.SerializedName
+
 
 data class PricePrediction(
     @SerializedName("selling_price")

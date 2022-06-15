@@ -3,7 +3,6 @@ package com.bangkit.hargain.presentation.main.product.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit.hargain.domain.product.entity.PricePredictionEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.domain.product.usecase.ProductUseCase
 import com.bangkit.hargain.presentation.common.base.BaseResult

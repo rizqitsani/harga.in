@@ -53,9 +53,9 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
         }
     }
 
-    override suspend fun getSearchedProduct(productId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+    override suspend fun getSearchedProduct(title: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
         return flow {
-            val response = productApi.getProductByTitle(productId)
+            val response = productApi.getProductByTitle(title)
             if (response.isSuccessful) {
                 val body = response.body()
                 val products = mutableListOf< ProductEntity>()
@@ -110,7 +110,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.cost,
                         productResponse.startPrice,
                         productResponse.endPrice,
-                        productResponse.PricePrediction
+                        productResponse.pricePredictions
                     )
 
                     emit(BaseResult.Success(product))
@@ -142,7 +142,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                     data.cost,
                     data.startPrice,
                     data.endPrice,
-                    data.PricePrediction
+                    data.pricePredictions
                 )
                 emit(BaseResult.Success(product))
             } else {
@@ -174,7 +174,7 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                         productResponse.cost,
                         productResponse.startPrice,
                         productResponse.endPrice,
-                        productResponse.PricePrediction
+                        productResponse.pricePredictions
                     )
 
                     emit(BaseResult.Success(product))

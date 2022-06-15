@@ -9,7 +9,7 @@ import com.bangkit.hargain.presentation.common.base.BaseResult
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    suspend fun getSearchedProduct(productId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>>
+    suspend fun getSearchedProduct(title: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>>
     suspend fun getAllProduct(): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>>
     suspend fun getProductDetail(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>>
     suspend fun createProduct(productCreateRequest: ProductCreateRequest) : Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>>

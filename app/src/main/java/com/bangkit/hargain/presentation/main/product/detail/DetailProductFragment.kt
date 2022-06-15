@@ -1,5 +1,6 @@
 package com.bangkit.hargain.presentation.main.product.detail
 
+import CustomMarker
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,10 +19,20 @@ import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
+import com.bangkit.hargain.presentation.main.MainActivity
 import com.bumptech.glide.Glide
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import kotlinx.android.synthetic.main.fragment_detail_product.*
 
 @AndroidEntryPoint
 class DetailProductFragment : Fragment() {
@@ -106,7 +117,107 @@ class DetailProductFragment : Fragment() {
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandId
 
+        setupSalesPredictionChart(product.pricePredictions)
+        setupProfitPredictionChart(product.pricePredictions)
 
+    }
+
+    private fun setupSalesPredictionChart(pricePredictions: List<PricePrediction>) {
+        //Part1
+        val entries = ArrayList<Entry>()
+        val lineChart: LineChart = binding!!.lineChartSales
+
+        //Part2
+        pricePredictions.forEach { it ->
+            entries.add(Entry(it.sellingPrice.toFloat(), it.totalSales.toFloat()))
+        }
+
+        //Part3
+        val vl = LineDataSet(entries, "Total Sales")
+
+        //Part4
+        vl.setDrawValues(false)
+        vl.setDrawFilled(true)
+        vl.lineWidth = 3f
+//        vl.fillColor = R.color.neutral_60
+//        vl.color = R.color.neutral_60
+//        vl.fillAlpha = R.color.red
+//        vl.fillColor = R.color.red
+
+        //Part5
+        lineChart.xAxis.labelRotationAngle = 0f
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        //Part6
+        lineChart.data = LineData(vl)
+
+        //Part7
+        lineChart.axisRight.isEnabled = false
+//        lineChart.xAxis.axisMaximum = j+0.1f
+
+        //Part8
+        lineChart.setTouchEnabled(true)
+        lineChart.setPinchZoom(true)
+
+        //Part9
+        lineChart.description.text = "Selling Price"
+        lineChart.setNoDataText("No prediction yet.")
+
+        //Part10
+        lineChart.animateX(1800, Easing.EaseInExpo)
+
+        //Part11
+        val markerView = CustomMarker(requireContext(), R.layout.marker_view)
+        lineChart.marker = markerView
+    }
+
+    private fun setupProfitPredictionChart(pricePredictions: List<PricePrediction>) {
+        //Part1
+        val entries = ArrayList<Entry>()
+        val lineChart: LineChart = binding!!.lineChartProfit
+
+        //Part2
+        pricePredictions.forEach { it ->
+            entries.add(Entry(it.sellingPrice.toFloat(), it.totalProfit.toFloat()))
+        }
+
+        //Part3
+        val vl = LineDataSet(entries, "Total Profit (in Rupiah)")
+
+        //Part4
+        vl.setDrawValues(false)
+        vl.setDrawFilled(true)
+        vl.lineWidth = 3f
+//        vl.fillColor = R.color.neutral_60
+//        vl.color = R.color.neutral_60
+//        vl.fillAlpha = R.color.red
+//        vl.fillColor = R.color.red
+
+        //Part5
+        lineChart.xAxis.labelRotationAngle = 0f
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        //Part6
+        lineChart.data = LineData(vl)
+
+        //Part7
+        lineChart.axisRight.isEnabled = false
+//        lineChart.xAxis.axisMaximum = j+0.1f
+
+        //Part8
+        lineChart.setTouchEnabled(true)
+        lineChart.setPinchZoom(true)
+
+        //Part9
+        lineChart.description.text = "Selling Price"
+        lineChart.setNoDataText("No prediction yet.")
+
+        //Part10
+        lineChart.animateX(1800, Easing.EaseInExpo)
+
+        //Part11
+        val markerView = CustomMarker(requireContext(), R.layout.marker_view)
+        lineChart.marker = markerView
     }
 
     private fun handleLoading(isLoading: Boolean) {
@@ -128,11 +239,17 @@ class DetailProductFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+
+        val bottomNav: BottomNavigationView = (requireActivity() as MainActivity).getBottomNav()
+        bottomNav.gone()
     }
 
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+
+        val bottomNav: BottomNavigationView = (requireActivity() as MainActivity).getBottomNav()
+        bottomNav.visible()
     }
 
     override fun onDestroyView() {

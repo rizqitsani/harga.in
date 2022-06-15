@@ -1,13 +1,15 @@
 package com.bangkit.hargain.presentation.main.mainmenu.mainsearch
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.SearchView
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -21,11 +23,13 @@ import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+
 @AndroidEntryPoint
-class MainSearchFragment : Fragment() {
+class MainSearchFragment : Fragment()  {
 
     private var _binding: FragmentMainSearchBinding? = null
     private val binding get() = _binding
@@ -38,6 +42,7 @@ class MainSearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         _binding = FragmentMainSearchBinding.inflate(layoutInflater)
         return binding?.root
     }
@@ -52,14 +57,12 @@ class MainSearchFragment : Fragment() {
 
         setupRecyclerView()
         observe()
-
-        viewModel.fetchProducts()
-
         val searchView = binding?.SearchViewProduct as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchProducts(query as String)
-                binding?.SearchViewProduct?.clearFocus()
+
+                searchView.clearFocus()
                 return true
             }
 
@@ -71,7 +74,14 @@ class MainSearchFragment : Fragment() {
             }
         })
 
+        viewModel.fetchProducts()
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 
     private fun observe() {
         observeState()
@@ -148,4 +158,6 @@ class MainSearchFragment : Fragment() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
+
+
 }

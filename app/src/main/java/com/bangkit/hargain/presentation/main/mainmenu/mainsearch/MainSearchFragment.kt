@@ -1,13 +1,9 @@
 package com.bangkit.hargain.presentation.main.mainmenu.mainsearch
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,7 +21,6 @@ import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -43,7 +38,11 @@ class MainSearchFragment : Fragment()  {
     private var searchQuery: String = ""
     private var categoryIdQuery: String = ""
 
-    private lateinit var categories: List<CategoryEntity>
+    private lateinit var categoriesOriginal: List<CategoryEntity>
+
+    private var categoriesValue: MutableList<String> = mutableListOf()
+    private lateinit var categoriesValueArray: Array<String>
+    private var checkedCategoryIndex = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,24 +86,30 @@ class MainSearchFragment : Fragment()  {
         })
 
         viewModel.fetchProducts()
+        viewModel.getCategories()
 
     }
 
     private fun showCategoryFilterDialog() {
-        val singleItems = arrayOf("Item 1", "Item 2", "Item 3")
-        val checkedItem = 1
-
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Choose Category")
             .setNeutralButton("Cancel") { dialog, which ->
                 // Respond to neutral button press
             }
             .setPositiveButton("Ok") { dialog, which ->
-                // Respond to positive button press
+                if (categoriesValueArray[checkedCategoryIndex] == "Default") {
+                    categoryIdQuery = ""
+                } else {
+                    val categoryIdFilter = categoriesOriginal.filter {
+                        it.name == categoriesValueArray[checkedCategoryIndex]
+                    }.firstOrNull()?.categoryId
+                    categoryIdQuery = categoryIdFilter ?: ""
+                }
+
+                viewModel.searchProducts(searchQuery, categoryIdQuery)
             }
-            // Single-choice items (initialized with checked item)
-            .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
-                // Respond to item chosen
+            .setSingleChoiceItems(categoriesValueArray, checkedCategoryIndex) { dialog, which ->
+                checkedCategoryIndex = which
             }
             .show()
     }
@@ -163,7 +168,14 @@ class MainSearchFragment : Fragment()  {
     }
 
     private fun handleCategories(categories: List<CategoryEntity>) {
-        this.categories = categories
+        this.categoriesOriginal = categories
+
+        categoriesValue.add("Default")
+        categories.forEach {
+            categoriesValue.add(it.name)
+        }
+
+        categoriesValueArray = categoriesValue.toTypedArray()
     }
 
     private fun handleLoading(isLoading: Boolean) {

@@ -19,6 +19,7 @@ import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
+import com.bangkit.hargain.presentation.main.product.detail.DetailProductFragmentArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -55,16 +56,20 @@ class MainSearchFragment : Fragment()  {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.createProductFab?.setOnClickListener {
-            findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
-        }
-        binding?.filterButton?.setOnClickListener {
-            showCategoryFilterDialog()
-        }
-
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
+        categoryIdQuery = MainSearchFragmentArgs.fromBundle(arguments as Bundle).categoryId
+
         setupRecyclerView()
+
+        if (categoryIdQuery.isEmpty()) {
+            viewModel.fetchProducts()
+        } else {
+            viewModel.searchProducts(searchQuery, categoryIdQuery)
+        }
+
+        viewModel.getCategories()
+
         observe()
 
         val searchView = binding?.SearchViewProduct as SearchView
@@ -85,9 +90,12 @@ class MainSearchFragment : Fragment()  {
             }
         })
 
-        viewModel.fetchProducts()
-        viewModel.getCategories()
-
+        binding?.createProductFab?.setOnClickListener {
+            findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
+        }
+        binding?.filterButton?.setOnClickListener {
+            showCategoryFilterDialog()
+        }
     }
 
     private fun showCategoryFilterDialog() {

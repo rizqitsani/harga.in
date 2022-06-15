@@ -27,6 +27,10 @@
         <action
             android:id="@+id/action_mainSearchFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

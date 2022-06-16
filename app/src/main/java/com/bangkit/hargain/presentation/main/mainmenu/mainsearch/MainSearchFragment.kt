@@ -17,6 +17,7 @@ import com.bangkit.hargain.databinding.FragmentMainSearchBinding
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
+import com.bangkit.hargain.presentation.common.extension.invisible
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -182,6 +183,11 @@ class MainSearchFragment : Fragment()  {
             if (it is ProductAdapter) {
                 it.setProducts(products)
             }
+            if(products.isEmpty()) {
+                binding?.notFoundTextView?.visible()
+            } else {
+                binding?.notFoundTextView?.gone()
+            }
         }
     }
 
@@ -199,6 +205,7 @@ class MainSearchFragment : Fragment()  {
     private fun handleLoading(isLoading: Boolean) {
         if (isLoading) {
             binding?.progressBar?.visible()
+            binding?.notFoundTextView?.gone()
         } else {
             binding?.progressBar?.gone()
         }

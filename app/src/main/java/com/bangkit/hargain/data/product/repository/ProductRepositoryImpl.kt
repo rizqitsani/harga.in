@@ -23,19 +23,19 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
                 val products = mutableListOf<ProductEntity>()
                 body?.data?.forEach { productResponse ->
                     products.add(
-                        ProductEntity( // TODO benerin argumen
+                        ProductEntity(
                             productResponse.productId,
                             productResponse.title,
                             productResponse.description,
                             productResponse.image,
-                            "",
-                            "",
-                            0.toDouble(),
+                            productResponse.brand.name,
+                            productResponse.category.name,
+                            productResponse.currentPrice,
                             productResponse.optimalPrice,
-                            productResponse.optimalPrice,
-                            productResponse.optimalPrice,
-                            productResponse.optimalPrice,
-                            productResponse.PricePredictions
+                            productResponse.cost,
+                            productResponse.startPrice,
+                            productResponse.endPrice,
+                            productResponse.pricePredictions
                         )
                     )
                 }
@@ -51,31 +51,33 @@ class ProductRepositoryImpl @Inject constructor(private val productApi: ProductA
         }
     }
 
-    override suspend fun getSearchedProduct(title: String, categoryId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+    override suspend fun getSearchedProduct(
+        title: String,
+        categoryId: String
+    ): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
         return flow {
             val response = productApi.searchProducts(title, categoryId)
             if (response.isSuccessful) {
                 val body = response.body()
-                val products = mutableListOf< ProductEntity>()
+                val products = mutableListOf<ProductEntity>()
                 body?.data?.forEach { productResponse ->
                     products.add(
-                        ProductEntity( // TODO benerin argumen
+                        ProductEntity(
                             productResponse.productId,
                             productResponse.title,
                             productResponse.description,
                             productResponse.image,
-                            "",
-                            "",
-                            0.toDouble(),
+                            productResponse.brand.name,
+                            productResponse.category.name,
+                            productResponse.currentPrice,
                             productResponse.optimalPrice,
-                            productResponse.optimalPrice,
-                            productResponse.optimalPrice,
-                            productResponse.optimalPrice,
-                            productResponse.PricePredictions
+                            productResponse.cost,
+                            productResponse.startPrice,
+                            productResponse.endPrice,
+                            productResponse.pricePredictions
                         )
                     )
                 }
-
 
                 emit(BaseResult.Success(products))
             } else {

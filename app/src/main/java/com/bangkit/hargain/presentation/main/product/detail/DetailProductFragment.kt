@@ -2,12 +2,12 @@ package com.bangkit.hargain.presentation.main.product.detail
 
 import CustomMarker
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -25,14 +25,13 @@ import com.bumptech.glide.Glide
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.util.*
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 
 @AndroidEntryPoint
 class DetailProductFragment : Fragment() {
@@ -236,12 +235,22 @@ class DetailProductFragment : Fragment() {
             binding?.productName?.gone()
             binding?.price?.gone()
             binding?.layoutDescription?.gone()
+            binding?.salesPredictionTextView?.gone()
+            binding?.salesPrediction?.gone()
+            binding?.profitPredictionTextView?.gone()
+            binding?.profitPrediction?.gone()
+            binding?.buttonEdit?.gone()
         } else {
             binding?.progressBar?.gone()
             binding?.imageView?.visible()
             binding?.productName?.visible()
             binding?.price?.visible()
             binding?.layoutDescription?.visible()
+            binding?.salesPredictionTextView?.visible()
+            binding?.salesPrediction?.visible()
+            binding?.profitPredictionTextView?.visible()
+            binding?.profitPrediction?.visible()
+            binding?.buttonEdit?.visible()
         }
     }
 

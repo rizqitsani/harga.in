@@ -127,7 +127,6 @@ class MainSearchFragment : Fragment()  {
                 viewModel.searchProducts(searchQuery, categoryIdQuery)
             }
             .setSingleChoiceItems(categoriesValueArray, checkedCategoryIndex) { dialog, which ->
-                context?.showToast(checkedCategoryIndex.toString())
                 checkedCategoryIndex = which
             }
             .show()

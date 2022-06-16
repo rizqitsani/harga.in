@@ -27,7 +27,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
-        binding?.nameTextView?.text = currentUser?.displayName ?: "-"
+//        binding?.nameTextView?.text = currentUser?.displayName ?: "-"
         binding?.emailTextView?.text = currentUser?.email ?: "-"
 
         binding?.signOutButton?.setOnClickListener {

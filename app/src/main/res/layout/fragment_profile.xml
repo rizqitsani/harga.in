@@ -29,22 +29,22 @@
         app:layout_constraintTop_toBottomOf="@id/imageView"
         >
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+<!--        <TableRow-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <TextView
-                android:padding="3dip"
-                android:text="@string/name"
-                android:textStyle="bold"
-                />
+<!--            <TextView-->
+<!--                android:padding="3dip"-->
+<!--                android:text="@string/name"-->
+<!--                android:textStyle="bold"-->
+<!--                />-->
 
-            <TextView
-                android:id="@+id/nameTextView"
-                android:layout_marginLeft="40dp"
-                android:padding="3dip"
-                android:text="@string/name" />
-        </TableRow>
+<!--            <TextView-->
+<!--                android:id="@+id/nameTextView"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:padding="3dip"-->
+<!--                android:text="@string/name" />-->
+<!--        </TableRow>-->
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

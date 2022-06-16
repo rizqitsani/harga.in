@@ -135,11 +135,9 @@ class CreateProductFragment : Fragment() {
         val description = binding?.descriptionInput?.text.toString().trim()
         val currentPrice = binding?.currentPriceInput?.text.toString().trim().toDoubleOrNull()
         val cost = binding?.costInput?.text.toString().trim().toDoubleOrNull()
-        val startPrice = binding?.startPriceInput?.text.toString().trim().toDoubleOrNull()
-        val endPrice = binding?.endPriceInput?.text.toString().trim().toDoubleOrNull()
 
         if(validate(
-                title, categoryValue, brandValue, description, currentPrice, cost, startPrice, endPrice
+                title, categoryValue, brandValue, description, currentPrice, cost
         ) and dropdownValid) {
                 viewModel.uploadImage(getFile as File)
 
@@ -149,7 +147,7 @@ class CreateProductFragment : Fragment() {
                             viewModel.createProduct(
                                 ProductCreateRequest(
                                     title, description, brandId!!, categoryId!!, currentPrice!!,
-                                    cost!!, it, startPrice!!, endPrice!!
+                                    cost!!, it
                                 )
                             )
                         }
@@ -161,7 +159,7 @@ class CreateProductFragment : Fragment() {
     }
 
     private fun validate(title: String, categoryValue: String, brandValue: String, description: String,
-                         currentPrice: Double?, cost: Double?, startPrice: Double?, endPrice: Double?) : Boolean {
+                         currentPrice: Double?, cost: Double?) : Boolean {
         // reset all error
         binding?.nameInput?.error = null
         binding?.categoryInput?.error = null
@@ -169,8 +167,6 @@ class CreateProductFragment : Fragment() {
         binding?.descriptionInput?.error = null
         binding?.currentPriceInput?.error = null
         binding?.costInput?.error = null
-        binding?.startPriceInput?.error = null
-        binding?.endPriceInput?.error = null
         binding?.imageErrorLabel?.invisible()
 
         if(getFile == null) {
@@ -199,14 +195,6 @@ class CreateProductFragment : Fragment() {
         }
         if(cost == null) {
             binding?.costInput?.error = "Cost is required."
-            return false
-        }
-        if(startPrice == null) {
-            binding?.startPriceInput?.error = "Start price is required."
-            return false
-        }
-        if(endPrice == null) {
-            binding?.endPriceInput?.error = "End price is required."
             return false
         }
 

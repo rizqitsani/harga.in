@@ -2,13 +2,13 @@ package com.bangkit.hargain.data.product.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductResponse(
+data class CreateProductResponse(
     @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("description") val description: String,
     @SerializedName("image") val image: String,
-    @SerializedName("brand") val brand: Brand,
-    @SerializedName("category") val category: Category,
+    @SerializedName("brandId") val brandId: String,
+    @SerializedName("categoryId") val categoryId: String,
     @SerializedName("currentPrice") val currentPrice: Double,
     @SerializedName("optimalPrice") val optimalPrice: Double,
     @SerializedName("cost") val cost: Double,

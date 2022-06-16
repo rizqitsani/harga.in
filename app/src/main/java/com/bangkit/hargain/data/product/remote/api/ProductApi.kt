@@ -2,10 +2,7 @@ package com.bangkit.hargain.data.product.remote.api
 
 import com.bangkit.hargain.data.common.utils.WrappedListResponse
 import com.bangkit.hargain.data.common.utils.WrappedResponse
-import com.bangkit.hargain.data.product.remote.dto.ProductCreateRequest
-import com.bangkit.hargain.data.product.remote.dto.ProductListResponse
-import com.bangkit.hargain.data.product.remote.dto.ProductResponse
-import com.bangkit.hargain.data.product.remote.dto.ProductUpdateRequest
+import com.bangkit.hargain.data.product.remote.dto.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -32,17 +29,17 @@ interface ProductApi {
     @POST("products")
     suspend fun createProduct(
         @Body productCreateRequest: ProductCreateRequest
-    ): Response<WrappedResponse<ProductResponse>>
+    ): Response<WrappedResponse<CreateProductResponse>>
 
     @PUT("products/{id}")
     suspend fun updateProduct(
         @Path("id") id: String,
         @Body productUpdateRequest: ProductUpdateRequest
-    ): Response<WrappedResponse<ProductResponse>>
+    ): Response<WrappedResponse<CreateProductResponse>>
 
     @DELETE("products/{id}")
     suspend fun deleteProduct(
         @Path("id") id: String
-    ): Response<WrappedResponse<ProductResponse>>
+    ): Response<WrappedResponse<CreateProductResponse>>
 
 }

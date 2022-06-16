@@ -250,7 +250,7 @@ class UpdateProductFragment : Fragment() {
         categoriesValue = mutableListOf()
 
         categories.forEachIndexed { index, category ->
-            if (category.categoryId == product.categoryId)
+            if (category.name == product.categoryName)
                 currentProductIndex = index
 
             categoriesValue.add(category.name)
@@ -270,7 +270,7 @@ class UpdateProductFragment : Fragment() {
         brandsValue = mutableListOf()
 
         brands.forEachIndexed { index, brand ->
-            if (brand.brandId == product.brandId)
+            if (brand.name == product.brandName)
                 currentProductIndex = index
 
             brandsValue.add(brand.name)

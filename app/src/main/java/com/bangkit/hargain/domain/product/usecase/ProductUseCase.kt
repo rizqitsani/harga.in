@@ -10,11 +10,14 @@ import javax.inject.Inject
 
 
 class ProductUseCase @Inject constructor(private val productRepository: ProductRepository) {
-    suspend fun create(productCreateRequest: ProductCreateRequest): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+    suspend fun create(productCreateRequest: ProductCreateRequest): Flow<BaseResult<ProductEntity, WrappedResponse<CreateProductResponse>>> {
         return productRepository.createProduct(productCreateRequest)
     }
 
-    suspend fun getSearched(title: String, categoryId: String): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
+    suspend fun getSearched(
+        title: String,
+        categoryId: String
+    ): Flow<BaseResult<List<ProductEntity>, WrappedResponse<ProductListResponse>>> {
         return productRepository.getSearchedProduct(title, categoryId)
     }
 
@@ -26,11 +29,14 @@ class ProductUseCase @Inject constructor(private val productRepository: ProductR
         return productRepository.getProductDetail(productId)
     }
 
-    suspend fun update(productId: String, productUpdateRequest: ProductUpdateRequest): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+    suspend fun update(
+        productId: String,
+        productUpdateRequest: ProductUpdateRequest
+    ): Flow<BaseResult<ProductEntity, WrappedResponse<CreateProductResponse>>> {
         return productRepository.updateProduct(productId, productUpdateRequest)
     }
 
-    suspend fun delete(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<ProductResponse>>> {
+    suspend fun delete(productId: String): Flow<BaseResult<ProductEntity, WrappedResponse<CreateProductResponse>>> {
         return productRepository.deleteProduct(productId)
     }
 }

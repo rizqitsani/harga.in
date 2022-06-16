@@ -116,16 +116,15 @@ class DetailProductFragment : Fragment() {
         binding?.imageView?.let {
             Glide.with(this)
                 .load(product.image)
-                .override(80, 80)
                 .centerCrop()
                 .into(it)
         }
 
         binding?.productName?.text = product.title
         binding?.price?.text = product.currentPrice.toString()
-        binding?.tvKategori?.text = product.categoryId
+        binding?.tvKategori?.text = product.categoryName
         binding?.tvDescription?.text = product.description
-        binding?.tvMerk?.text = product.brandId
+        binding?.tvMerk?.text = product.brandName
 
         setupSalesPredictionChart(product.pricePredictions)
         setupProfitPredictionChart(product.pricePredictions)

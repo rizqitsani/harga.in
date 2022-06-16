@@ -14,33 +14,32 @@ data class PricePrediction(
     val totalSales: Double,
 ) : Parcelable
 
+
+data class Brand(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("name")
+    val name: String,
+)
+
+data class Category(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("name")
+    val name: String,
+)
+
 data class ProductListResponse(
-
-    @field:SerializedName("productId")
-    val productId: String,
-
-    @field:SerializedName("startPrice")
-    val startPrice: Int,
-
-    @field:SerializedName("image")
-    val image: String,
-
-    @field:SerializedName("cost")
-    val cost: Int,
-
-    @field:SerializedName("optimalPrice")
-    val optimalPrice: Double,
-
-    @field:SerializedName("pricePredictions")
-    val PricePredictions: List<PricePrediction>,
-
-    @field:SerializedName("description")
-    val description: String,
-
-    @field:SerializedName("endPrice")
-    val endPrice: Int,
-
-    @field:SerializedName("title")
-    val title: String,
-
-    )
+    @SerializedName("productId") val productId: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("image") val image: String,
+    @SerializedName("brand") val brand: Brand,
+    @SerializedName("category") val category: Category,
+    @SerializedName("currentPrice") val currentPrice: Double,
+    @SerializedName("optimalPrice") val optimalPrice: Double,
+    @SerializedName("cost") val cost: Double,
+    @SerializedName("startPrice") val startPrice: Double,
+    @SerializedName("endPrice") val endPrice: Double,
+    @SerializedName("pricePredictions") val pricePredictions: List<PricePrediction>
+)

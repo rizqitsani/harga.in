@@ -1,11 +1,11 @@
 package com.bangkit.hargain.presentation.main.mainmenu.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.bangkit.hargain.databinding.FragmentProfileBinding
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth

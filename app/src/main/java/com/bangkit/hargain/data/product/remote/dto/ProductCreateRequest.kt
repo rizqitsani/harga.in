@@ -1,7 +1,6 @@
 package com.bangkit.hargain.data.product.remote.dto
 
 import com.google.gson.annotations.SerializedName
-import com.google.type.DateTime
 
 data class ProductCreateRequest(
     @SerializedName("title") val title: String,

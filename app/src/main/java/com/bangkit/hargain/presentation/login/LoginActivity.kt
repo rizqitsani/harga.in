@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityLoginBinding
 import com.bangkit.hargain.domain.login.entity.LoginEntity
 import com.bangkit.hargain.infra.utils.SharedPrefs

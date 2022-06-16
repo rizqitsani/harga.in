@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ProductRowBinding
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.helper.ProductDiffCallback
@@ -46,6 +47,8 @@ class ProductAdapter(private val products: MutableList<ProductEntity>) :
             .centerCrop()
             .into(holder.itemBinding.imageProduct)
         holder.itemBinding.textViewProductName.text = product.title
+        holder.itemBinding.textViewProductOptimalPrice.text =
+            holder.itemView.resources.getString(R.string.product_price, String.format("%.2f", product.optimalPrice))
 
         holder.itemBinding.root.setOnClickListener {
             onItemTapListener?.onTap(product)

@@ -120,7 +120,7 @@ class DetailProductFragment : Fragment() {
         }
 
         binding?.productName?.text = product.title
-        binding?.price?.text = product.currentPrice.toString()
+        binding?.price?.text = resources.getString(R.string.product_price, String.format("%.2f", product.optimalPrice))
         binding?.tvKategori?.text = product.categoryName
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandName

@@ -1,4 +1,4 @@
-package com.bangkit.hargain.customLayout
+package com.bangkit.hargain.presentation.customLayout
 
 import android.content.Context
 import android.graphics.Canvas

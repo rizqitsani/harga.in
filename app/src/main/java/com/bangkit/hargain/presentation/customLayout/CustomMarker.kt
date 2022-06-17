@@ -1,4 +1,4 @@
-package com.bangkit.hargain.customLayout
+package com.bangkit.hargain.presentation.customLayout
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 
-class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, layoutResource) {
+class CustomMarker(context: Context, layoutResource: Int) : MarkerView(context, layoutResource) {
 
     private var binding: MarkerViewBinding =
         MarkerViewBinding.inflate(LayoutInflater.from(context), this, true)
@@ -16,16 +16,14 @@ class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, 
     override fun refreshContent(entry: Entry?, highlight: Highlight?) {
         val y = entry?.y?.toDouble() ?: 0.0
         val x = entry?.x?.toDouble() ?: 0.0
-        var yText = ""
-        var xText = ""
 
-        yText = if(y.toString().length > 8){
+        val yText = if(y.toString().length > 8){
             "Y: " + y.toString().substring(0,7)
         } else{
             "Y: $y"
         }
 
-        xText = if(x.toString().length > 8){
+        val xText = if(x.toString().length > 8){
             "X: " + x.toString().substring(0,7)
         } else{
             "X: $x"

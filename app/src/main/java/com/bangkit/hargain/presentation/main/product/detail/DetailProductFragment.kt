@@ -13,7 +13,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.hargain.R
-import com.bangkit.hargain.customLayout.CustomMarker
+import com.bangkit.hargain.presentation.customLayout.CustomMarker
 import com.bangkit.hargain.data.product.remote.dto.PricePrediction
 import com.bangkit.hargain.databinding.FragmentDetailProductBinding
 import com.bangkit.hargain.domain.product.entity.ProductEntity
@@ -125,6 +125,7 @@ class DetailProductFragment : Fragment() {
         binding?.tvKategori?.text = product.categoryName
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandName
+        binding?.tvCurrentPrice?.text = resources.getString(R.string.product_price, formatCurrency(product. currentPrice))
 
         setupSalesPredictionChart(product.pricePredictions)
         setupProfitPredictionChart(product.pricePredictions)

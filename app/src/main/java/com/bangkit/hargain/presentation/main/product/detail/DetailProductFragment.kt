@@ -2,11 +2,12 @@ package com.bangkit.hargain.presentation.main.product.detail
 
 import CustomMarker
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -24,15 +25,13 @@ import com.bumptech.glide.Glide
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.util.*
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import kotlinx.android.synthetic.main.fragment_detail_product.*
 
 @AndroidEntryPoint
 class DetailProductFragment : Fragment() {
@@ -85,8 +84,18 @@ class DetailProductFragment : Fragment() {
         viewModel.mProduct
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { product ->
-                if (product !== null)
+                if (product !== null) {
                     handleProductDetail(product)
+                    binding?.buttonEdit?.setOnClickListener {
+                        val bundle = bundleOf("product" to product)
+                        findNavController().navigate(
+                            R.id.action_detailProductFragment_to_updateProductFragment,
+                            bundle
+                        )
+                    }
+                }
+
+
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -106,16 +115,15 @@ class DetailProductFragment : Fragment() {
         binding?.imageView?.let {
             Glide.with(this)
                 .load(product.image)
-                .override(80, 80)
                 .centerCrop()
                 .into(it)
         }
 
         binding?.productName?.text = product.title
         binding?.price?.text = product.currentPrice.toString()
-        binding?.tvKategori?.text = product.categoryId
+        binding?.tvKategori?.text = product.categoryName
         binding?.tvDescription?.text = product.description
-        binding?.tvMerk?.text = product.brandId
+        binding?.tvMerk?.text = product.brandName
 
         setupSalesPredictionChart(product.pricePredictions)
         setupProfitPredictionChart(product.pricePredictions)
@@ -227,12 +235,22 @@ class DetailProductFragment : Fragment() {
             binding?.productName?.gone()
             binding?.price?.gone()
             binding?.layoutDescription?.gone()
+            binding?.salesPredictionTextView?.gone()
+            binding?.salesPrediction?.gone()
+            binding?.profitPredictionTextView?.gone()
+            binding?.profitPrediction?.gone()
+            binding?.buttonEdit?.gone()
         } else {
             binding?.progressBar?.gone()
             binding?.imageView?.visible()
             binding?.productName?.visible()
             binding?.price?.visible()
             binding?.layoutDescription?.visible()
+            binding?.salesPredictionTextView?.visible()
+            binding?.salesPrediction?.visible()
+            binding?.profitPredictionTextView?.visible()
+            binding?.profitPrediction?.visible()
+            binding?.buttonEdit?.visible()
         }
     }
 

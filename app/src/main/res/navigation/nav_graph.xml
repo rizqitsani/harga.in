@@ -27,6 +27,13 @@
         <action
             android:id="@+id/action_mainSearchFragment_to_detailProductFragment"
             app:destination="@id/detailProductFragment" />
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument android:name="categoryName"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -49,5 +56,16 @@
         <argument
             android:name="productId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailProductFragment_to_updateProductFragment"
+            app:destination="@id/updateProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProductFragment"
+        android:name="com.bangkit.hargain.presentation.main.product.edit.UpdateProductFragment"
+        android:label="@string/update_product" >
+        <argument
+            android:name="product"
+            app:argType="com.bangkit.hargain.domain.product.entity.ProductEntity" />
     </fragment>
 </navigation>

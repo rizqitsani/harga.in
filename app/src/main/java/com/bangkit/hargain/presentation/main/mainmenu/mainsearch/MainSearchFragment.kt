@@ -1,11 +1,9 @@
 package com.bangkit.hargain.presentation.main.mainmenu.mainsearch
 
-
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,11 +17,11 @@ import com.bangkit.hargain.databinding.FragmentMainSearchBinding
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
+import com.bangkit.hargain.presentation.common.extension.invisible
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -40,8 +38,14 @@ class MainSearchFragment : Fragment()  {
 
     private var searchQuery: String = ""
     private var categoryIdQuery: String = ""
+    private var categoryNameArgs: String = ""
 
-    private lateinit var categories: List<CategoryEntity>
+    private lateinit var categoriesOriginal: List<CategoryEntity>
+
+    private var categoriesValue: MutableList<String> = mutableListOf()
+    private lateinit var categoriesValueArray: Array<String>
+    private var checkedCategoryIndex = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,16 +58,21 @@ class MainSearchFragment : Fragment()  {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.createProductFab?.setOnClickListener {
-            findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
-        }
-        binding?.filterButton?.setOnClickListener {
-            showCategoryFilterDialog()
-        }
-
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
+        categoryIdQuery = MainSearchFragmentArgs.fromBundle(arguments as Bundle).categoryId
+        categoryNameArgs = MainSearchFragmentArgs.fromBundle(arguments as Bundle).categoryName
+
         setupRecyclerView()
+
+        viewModel.getCategories()
+
+        if (categoryIdQuery.isEmpty()) {
+            viewModel.fetchProducts()
+        } else {
+            viewModel.searchProducts(searchQuery, categoryIdQuery)
+        }
+
         observe()
 
         val searchView = binding?.SearchViewProduct as SearchView
@@ -84,25 +93,42 @@ class MainSearchFragment : Fragment()  {
             }
         })
 
-        viewModel.fetchProducts()
-
+        binding?.createProductFab?.setOnClickListener {
+            findNavController().navigate(R.id.action_mainSearchFragment_to_createProductFragment)
+        }
+        binding?.filterButton?.setOnClickListener {
+            showCategoryFilterDialog()
+        }
     }
 
     private fun showCategoryFilterDialog() {
-        val singleItems = arrayOf("Item 1", "Item 2", "Item 3")
-        val checkedItem = 1
-
+        if(categoryNameArgs.isNotEmpty()) {
+            categoriesValueArray.forEachIndexed { index, s ->
+                if(s == categoryNameArgs) {
+                    checkedCategoryIndex = index
+                }
+            }
+        }
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Choose Category")
             .setNeutralButton("Cancel") { dialog, which ->
                 // Respond to neutral button press
             }
             .setPositiveButton("Ok") { dialog, which ->
-                // Respond to positive button press
+                if (categoriesValueArray[checkedCategoryIndex] == "Default") {
+                    categoryIdQuery = ""
+                } else {
+                    val categoryIdFilter = categoriesOriginal.filter {
+                        it.name == categoriesValueArray[checkedCategoryIndex]
+                    }.firstOrNull()?.categoryId
+                    categoryIdQuery = categoryIdFilter ?: ""
+                }
+
+                viewModel.searchProducts(searchQuery, categoryIdQuery)
             }
-            // Single-choice items (initialized with checked item)
-            .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
-                // Respond to item chosen
+            .setSingleChoiceItems(categoriesValueArray, checkedCategoryIndex) { dialog, which ->
+                context?.showToast(checkedCategoryIndex.toString())
+                checkedCategoryIndex = which
             }
             .show()
     }
@@ -157,16 +183,29 @@ class MainSearchFragment : Fragment()  {
             if (it is ProductAdapter) {
                 it.setProducts(products)
             }
+            if(products.isEmpty()) {
+                binding?.notFoundTextView?.visible()
+            } else {
+                binding?.notFoundTextView?.gone()
+            }
         }
     }
 
     private fun handleCategories(categories: List<CategoryEntity>) {
-        this.categories = categories
+        this.categoriesOriginal = categories
+
+        categoriesValue.add("Default")
+        categories.forEach {
+            categoriesValue.add(it.name)
+        }
+
+        categoriesValueArray = categoriesValue.toTypedArray()
     }
 
     private fun handleLoading(isLoading: Boolean) {
         if (isLoading) {
             binding?.progressBar?.visible()
+            binding?.notFoundTextView?.gone()
         } else {
             binding?.progressBar?.gone()
         }

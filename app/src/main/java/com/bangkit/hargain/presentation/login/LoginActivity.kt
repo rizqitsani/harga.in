@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.bangkit.hargain.R
 import com.bangkit.hargain.databinding.ActivityLoginBinding
 import com.bangkit.hargain.domain.login.entity.LoginEntity
 import com.bangkit.hargain.infra.utils.SharedPrefs
@@ -66,8 +65,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginFirebase(email: String, password: String) {
+        handleLoading(true)
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
+                handleLoading(false)
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
@@ -90,37 +91,30 @@ class LoginActivity : AppCompatActivity() {
                     sharedPrefs.saveToken(idToken ?: "")
                     goToMainActivity()
                 } else {
+                    showToast(task.exception.toString())
                     showToast("Authentication token failed.")
                 }
             }
     }
 
     private fun validate(email: String, password: String) : Boolean{
-        resetAllInputError()
-        if(!email.isEmail()){
-            setEmailError(getString(R.string.error_email_not_valid))
+        binding?.emailEditText.error = null
+        binding?.passwordEditText.error = null
+
+        if(email.isEmpty()) {
+            binding?.emailEditText.error = "Email is required."
             return false
         }
-
-        if(password.length < 8){
-            setPasswordError(getString(R.string.error_password_not_valid))
+        if(!email.isEmail()) {
+            binding?.emailEditText.error = "Must be an email."
+            return false
+        }
+        if(password.isEmpty()) {
+            binding?.passwordEditText.error = "Password is required."
             return false
         }
 
         return true
-    }
-
-    private fun resetAllInputError(){
-        setEmailError(null)
-        setPasswordError(null)
-    }
-
-    private fun setEmailError(e : String?){
-//        binding.emailEditText.error = e
-    }
-
-    private fun setPasswordError(e: String?){
-//        binding.passwordEditText.error = e
     }
 
     private fun observe(){

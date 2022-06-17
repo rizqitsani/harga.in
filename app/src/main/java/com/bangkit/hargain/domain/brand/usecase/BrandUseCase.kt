@@ -2,7 +2,6 @@ package com.bangkit.hargain.domain.brand.usecase
 
 import com.bangkit.hargain.data.brand.remote.dto.BrandResponse
 import com.bangkit.hargain.data.common.utils.WrappedListResponse
-import com.bangkit.hargain.data.product.remote.dto.ProductCreateRequest
 import com.bangkit.hargain.domain.brand.BrandRepository
 import com.bangkit.hargain.domain.brand.entity.BrandEntity
 import com.bangkit.hargain.presentation.common.base.BaseResult

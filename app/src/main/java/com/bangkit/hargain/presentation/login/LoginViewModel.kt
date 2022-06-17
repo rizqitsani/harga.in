@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.bangkit.hargain.BuildConfig
 import com.bangkit.hargain.data.login.remote.api.AuthAPI
 import com.bangkit.hargain.domain.login.entity.LoginEntity
-import com.bangkit.hargain.presentation.common.extension.TAG
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase

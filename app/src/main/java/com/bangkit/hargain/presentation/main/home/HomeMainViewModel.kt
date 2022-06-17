@@ -8,13 +8,8 @@ import com.bangkit.hargain.domain.category.usecase.GetAllCategoriesUseCase
 import com.bangkit.hargain.presentation.common.base.BaseResult
 import com.bangkit.hargain.presentation.common.extension.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel

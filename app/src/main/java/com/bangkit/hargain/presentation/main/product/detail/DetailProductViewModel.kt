@@ -76,6 +76,7 @@ class DetailProductViewModel @Inject constructor(private val productUseCase: Pro
                     setLoading(false)
                     when (result) {
                         is BaseResult.Success -> {
+                            showToast("Product deleted.")
                             setIsDeleted(true)
                         }
                         is BaseResult.Error -> {

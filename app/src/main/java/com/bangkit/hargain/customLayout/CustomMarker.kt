@@ -1,11 +1,21 @@
+package com.bangkit.hargain.customLayout
+
 import android.content.Context
+import android.view.ContextMenu
+import android.view.LayoutInflater
+import com.bangkit.hargain.databinding.MarkerViewBinding
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.marker_view.view.*
 
 class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, layoutResource) {
+
+    private var binding: MarkerViewBinding
+
+    init { // inflate binding and add as view
+        binding = MarkerViewBinding.inflate(LayoutInflater.from(context), this, true)
+    }
 
     override fun refreshContent(entry: Entry?, highlight: Highlight?) {
         val y = entry?.y?.toDouble() ?: 0.0
@@ -13,22 +23,20 @@ class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, 
         var yText = ""
         var xText = ""
 
-        if(y.toString().length > 8){
-            yText = "Y: " + y.toString().substring(0,7)
-        }
-        else{
-            yText = "Y: $y"
+        yText = if(y.toString().length > 8){
+            "Y: " + y.toString().substring(0,7)
+        } else{
+            "Y: $y"
         }
 
-        if(x.toString().length > 8){
-            xText = "X: " + x.toString().substring(0,7)
-        }
-        else{
-            xText = "X: $x"
+        xText = if(x.toString().length > 8){
+            "X: " + x.toString().substring(0,7)
+        } else{
+            "X: $x"
         }
 
         val resText = "$xText\n$yText"
-        tvPrice.text = resText
+        binding.tvPrice.text = resText
         super.refreshContent(entry, highlight)
     }
 

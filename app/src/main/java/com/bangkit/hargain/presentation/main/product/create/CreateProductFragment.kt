@@ -49,7 +49,6 @@ class CreateProductFragment : Fragment() {
     private val viewModel : CreateProductViewModel by viewModels()
 
     private var getFile: File? = null
-    private lateinit var ImageUri : URI
 
     private lateinit var categoriesValue: MutableList<String>
     private lateinit var categoriesMap: HashMap<String, String>
@@ -93,7 +92,7 @@ class CreateProductFragment : Fragment() {
         categoriesValue = mutableListOf()
         categories.forEach {
             categoriesValue.add(it.name)
-            categoriesMap.put(it.categoryId, it.name)
+            categoriesMap[it.categoryId] = it.name
         }
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_category, categoriesValue)
         binding?.categoryInput?.setAdapter(arrayAdapter)
@@ -104,7 +103,7 @@ class CreateProductFragment : Fragment() {
         brandsValue = mutableListOf()
         brands.forEach {
             brandsValue.add(it.name)
-            brandsMap.put(it.brandId, it.name)
+            brandsMap[it.brandId] = it.name
         }
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_category, brandsValue)
         binding?.brandInput?.setAdapter(arrayAdapter)
@@ -222,7 +221,7 @@ class CreateProductFragment : Fragment() {
 
         viewModel.mImageUrl
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-            .onEach { url ->
+            .onEach { _ ->
                 saveProduct()
             }
     }
@@ -314,6 +313,5 @@ class CreateProductFragment : Fragment() {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION)
         private const val REQUEST_CODE_PERMISSIONS = 10
 
-        private var IMAGE_URL = ""
     }
 }

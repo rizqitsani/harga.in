@@ -100,6 +100,5 @@ fun reduceFileImage(file: File): File {
 }
 
 fun formatCurrency(number: Double): String {
-    val str: String = NumberFormat.getNumberInstance(Locale.US).format(number)
-    return str
+    return NumberFormat.getNumberInstance(Locale.US).format(number)
 }

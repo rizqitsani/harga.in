@@ -1,17 +1,18 @@
-package com.bangkit.hargain
+package com.bangkit.hargain.customLayout
+
 
 import android.content.Context
 import android.graphics.Canvas
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Patterns
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 
-class customEmailEditText : AppCompatEditText {
-    var accept: Boolean = false
-    var warning: String = "email format not valid"
+class CustomPasswordEditText : AppCompatEditText {
+
+    var accept: Boolean = true
+    var warning: String = "invalid Password! Password must be 6 characters or more"
 
     constructor(context: Context) : super(context) {
         init()
@@ -36,11 +37,12 @@ class customEmailEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (!Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
+                if (s.toString().trim().length > 5) {
+                    accept = true
+
+                } else if (s.toString().trim().length <= 5) {
                     accept = false
                     error = warning
-                } else {
-                    accept = true
                 }
             }
 
@@ -52,7 +54,7 @@ class customEmailEditText : AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Email"
+        hint = "Password"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 }

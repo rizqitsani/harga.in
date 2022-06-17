@@ -40,7 +40,7 @@ class UpdateProductViewModel @Inject constructor(
     private val brands = MutableStateFlow<List<BrandEntity>>(mutableListOf())
     val mBrands: StateFlow<List<BrandEntity>> get() = brands
 
-    private val imageUrl = MutableStateFlow<String>("")
+    private val imageUrl = MutableStateFlow("")
     val mImageUrl: StateFlow<String> get() = imageUrl
 
     private fun setLoading(isLoading: Boolean) {

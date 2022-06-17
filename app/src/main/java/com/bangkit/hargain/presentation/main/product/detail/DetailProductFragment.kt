@@ -1,6 +1,6 @@
 package com.bangkit.hargain.presentation.main.product.detail
 
-import CustomMarker
+import com.bangkit.hargain.customLayout.CustomMarker
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -137,7 +137,7 @@ class DetailProductFragment : Fragment() {
         val lineChart: LineChart = binding!!.lineChartSales
 
         //Part2
-        pricePredictions.forEach { it ->
+        pricePredictions.forEach {
             entries.add(Entry(it.sellingPrice.toFloat(), it.totalSales.toFloat()))
         }
 
@@ -186,7 +186,7 @@ class DetailProductFragment : Fragment() {
         val lineChart: LineChart = binding!!.lineChartProfit
 
         //Part2
-        pricePredictions.forEach { it ->
+        pricePredictions.forEach {
             entries.add(Entry(it.sellingPrice.toFloat(), it.totalProfit.toFloat()))
         }
 

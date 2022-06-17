@@ -2,7 +2,7 @@ package com.bangkit.hargain.domain.product.entity
 
 import android.os.Parcelable
 import com.bangkit.hargain.data.product.remote.dto.PricePrediction
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProductEntity(

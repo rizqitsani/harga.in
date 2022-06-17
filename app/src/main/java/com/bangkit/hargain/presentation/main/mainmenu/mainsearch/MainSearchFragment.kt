@@ -132,10 +132,6 @@ class MainSearchFragment : Fragment()  {
             .show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
     private fun observe() {
         observeState()
         observeProducts()

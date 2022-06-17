@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
     private fun loginFirebase(email: String, password: String) {
         handleLoading(true)
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener { task ->
                 handleLoading(false)
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
@@ -98,19 +98,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validate(email: String, password: String) : Boolean{
-        binding?.emailEditText.error = null
-        binding?.passwordEditText.error = null
+        binding.emailEditText.error = null
+        binding.passwordEditText.error = null
 
         if(email.isEmpty()) {
-            binding?.emailEditText.error = "Email is required."
+            binding.emailEditText.error = "Email is required."
             return false
         }
         if(!email.isEmail()) {
-            binding?.emailEditText.error = "Must be an email."
+            binding.emailEditText.error = "Must be an email."
             return false
         }
         if(password.isEmpty()) {
-            binding?.passwordEditText.error = "Password is required."
+            binding.passwordEditText.error = "Password is required."
             return false
         }
 

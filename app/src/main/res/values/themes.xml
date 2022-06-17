@@ -24,16 +24,5 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Hargain.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Hargain.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <style name="Theme.Hargain.NoActionBar.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-    <style name="Theme.Hargain.NoActionBar.AppBarOverlay"
-        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.Hargain.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
 </resources>

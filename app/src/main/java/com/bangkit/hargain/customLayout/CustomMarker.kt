@@ -10,11 +10,8 @@ import com.github.mikephil.charting.utils.MPPointF
 
 class CustomMarker(context: Context, layoutResource: Int):  MarkerView(context, layoutResource) {
 
-    private var binding: MarkerViewBinding
-
-    init { // inflate binding and add as view
-        binding = MarkerViewBinding.inflate(LayoutInflater.from(context), this, true)
-    }
+    private var binding: MarkerViewBinding =
+        MarkerViewBinding.inflate(LayoutInflater.from(context), this, true)
 
     override fun refreshContent(entry: Entry?, highlight: Highlight?) {
         val y = entry?.y?.toDouble() ?: 0.0

@@ -6,8 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.main.mainmenu.profile.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="112dp"
@@ -29,22 +27,6 @@
         app:layout_constraintTop_toBottomOf="@id/imageView"
         >
 
-<!--        <TableRow-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <TextView-->
-<!--                android:padding="3dip"-->
-<!--                android:text="@string/name"-->
-<!--                android:textStyle="bold"-->
-<!--                />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/nameTextView"-->
-<!--                android:layout_marginLeft="40dp"-->
-<!--                android:padding="3dip"-->
-<!--                android:text="@string/name" />-->
-<!--        </TableRow>-->
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

@@ -1,28 +1,7 @@
 <resources>
     <string name="app_name">HargaIn</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Berikutnya</string>
-    <string name="previous">Sebelumnya</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="button_text_ok">Ok</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">Selamat datang!</string>
-    <string name="invalid_username">Username tidak valid</string>
-    <string name="invalid_password">Password harus > 5 karakter</string>
-    <string name="login_failed">Login gagal</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="title_search">Cari</string>
     <string name="title_profile">Profil</string>
@@ -30,12 +9,8 @@
     <string name="product_name">Nama Produk</string>
     <string name="product_price">Rp%s</string>
     <string name="edit_product">Edit Produk</string>
-    <string name="name">Nama</string>
     <string name="sign_out">Sign out</string>
-    <string name="product_picture">Gambar Produk</string>
     <string name="email">Email</string>
-    <string name="error_email_not_valid">Email tidak valid</string>
-    <string name="error_password_not_valid">Password tidak valid</string>
     <string name="category_image">Gambar kategori</string>
     <string name="category">Kategori</string>
     <string name="add_product">Tambah Produk</string>
@@ -44,11 +19,8 @@
     <string name="current_price">Harga Sekarang</string>
     <string name="save">Simpan</string>
     <string name="cost">Modal</string>
-    <string name="start_price_prediction">Start Price for Prediction</string>
-    <string name="end_price_prediction">End Price for Prediction</string>
     <string name="upload_image">Upload Gambar</string>
     <string name="image_is_required">Image is required</string>
-    <string name="search_product">Temukan Produk</string>
     <string name="update_product">Update Produk</string>
     <string name="product_not_found">Produk tidak ditemukan</string>
     <string name="sales_prediction">Prediksi Penjualan</string>

@@ -20,6 +20,7 @@ import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
+import com.bangkit.hargain.presentation.common.helper.formatCurrency
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.animation.Easing
@@ -120,7 +121,7 @@ class DetailProductFragment : Fragment() {
         }
 
         binding?.productName?.text = product.title
-        binding?.price?.text = resources.getString(R.string.product_price, String.format("%.2f", product.optimalPrice))
+        binding?.price?.text = resources.getString(R.string.product_price, formatCurrency(product.optimalPrice))
         binding?.tvKategori?.text = product.categoryName
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandName

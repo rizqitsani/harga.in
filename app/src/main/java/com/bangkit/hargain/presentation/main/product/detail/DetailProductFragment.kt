@@ -142,7 +142,7 @@ class DetailProductFragment : Fragment() {
         }
 
         //Part3
-        val vl = LineDataSet(entries, "Total Sales")
+        val vl = LineDataSet(entries, getString(R.string.total_sales))
 
         //Part4
         vl.setDrawValues(false)
@@ -169,8 +169,8 @@ class DetailProductFragment : Fragment() {
         lineChart.setPinchZoom(true)
 
         //Part9
-        lineChart.description.text = "Selling Price"
-        lineChart.setNoDataText("No prediction yet.")
+        lineChart.description.text = getString(R.string.selling_price)
+        lineChart.setNoDataText(getString(R.string.no_prediction_yet))
 
         //Part10
         lineChart.animateX(1800, Easing.EaseInExpo)
@@ -191,7 +191,7 @@ class DetailProductFragment : Fragment() {
         }
 
         //Part3
-        val vl = LineDataSet(entries, "Total Profit (in Rupiah)")
+        val vl = LineDataSet(entries, getString(R.string.total_profit))
 
         //Part4
         vl.setDrawValues(false)
@@ -218,8 +218,8 @@ class DetailProductFragment : Fragment() {
         lineChart.setPinchZoom(true)
 
         //Part9
-        lineChart.description.text = "Selling Price"
-        lineChart.setNoDataText("No prediction yet.")
+        lineChart.description.text = getString(R.string.selling_price)
+        lineChart.setNoDataText(getString(R.string.no_prediction_yet))
 
         //Part10
         lineChart.animateX(1800, Easing.EaseInExpo)

@@ -24,10 +24,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-/*
-* mohon maaf ini ada campuran login pakai api google dan firebase, masih berantakan tapi prioritas nanti aja ok
-* yang dipakai adalah api firebase, tapi di login view model masih fungsi2 api google
-* */
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 

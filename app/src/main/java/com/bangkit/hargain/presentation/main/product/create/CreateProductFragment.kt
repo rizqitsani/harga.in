@@ -39,7 +39,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import java.io.File
-import java.net.URI
 
 @AndroidEntryPoint
 class CreateProductFragment : Fragment() {
@@ -221,7 +220,7 @@ class CreateProductFragment : Fragment() {
 
         viewModel.mImageUrl
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-            .onEach { _ ->
+            .onEach {
                 saveProduct()
             }
     }

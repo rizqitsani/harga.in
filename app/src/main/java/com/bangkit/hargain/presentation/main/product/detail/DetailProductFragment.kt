@@ -1,6 +1,5 @@
 package com.bangkit.hargain.presentation.main.product.detail
 
-import com.bangkit.hargain.customLayout.CustomMarker
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +13,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.hargain.R
+import com.bangkit.hargain.customLayout.CustomMarker
 import com.bangkit.hargain.data.product.remote.dto.PricePrediction
 import com.bangkit.hargain.databinding.FragmentDetailProductBinding
 import com.bangkit.hargain.domain.product.entity.ProductEntity

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">HargaIn</string>
+    <string name="button_text_ok">Ok</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="password">Password</string>
+    <string name="title_search">Cari</string>
+    <string name="title_profile">Profil</string>
+    <string name="title_home">Home</string>
+    <string name="product_name">Nama Produk</string>
+    <string name="product_price">Rp%s</string>
+    <string name="edit_product">Edit Produk</string>
+    <string name="sign_out">Sign out</string>
+    <string name="email">Email</string>
+    <string name="category_image">Gambar kategori</string>
+    <string name="category">Kategori</string>
+    <string name="add_product">Tambah Produk</string>
+    <string name="brand">Merk</string>
+    <string name="description">Deskripsi</string>
+    <string name="current_price">Harga Sekarang</string>
+    <string name="save">Simpan</string>
+    <string name="cost">Modal</string>
+    <string name="upload_image">Upload Gambar</string>
+    <string name="image_is_required">Image is required</string>
+    <string name="update_product">Update Produk</string>
+    <string name="product_not_found">Produk tidak ditemukan</string>
+    <string name="sales_prediction">Prediksi Penjualan</string>
+    <string name="profit_prediction">Prediksi Keuntungan</string>
+    <string name="selling_price">Harga Jual</string>
+    <string name="no_prediction_yet">Belum ada prediksi</string>
+    <string name="total_sales">Total Penjualan</string>
+    <string name="total_profit">Total Keuntungan (dalam Rupiah)</string>
+</resources>

@@ -112,48 +112,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/startPriceTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/start_price_prediction"
-                app:layout_constraintTop_toBottomOf="@id/costTextField">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/startPriceInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/endPriceTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/end_price_prediction"
-                app:layout_constraintTop_toBottomOf="@id/startPriceTextField">
-
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/endPriceInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <TextView
                 android:id="@+id/uploadImageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/upload_image"
-                app:layout_constraintTop_toBottomOf="@id/endPriceTextField"
+                app:layout_constraintTop_toBottomOf="@id/costTextField"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textAppearance="@style/TextAppearance.Hargain.Body1"
                 android:layout_marginTop="10dp"

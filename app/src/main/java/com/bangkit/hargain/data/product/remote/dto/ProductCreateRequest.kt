@@ -10,7 +10,5 @@ data class ProductCreateRequest(
     @SerializedName("currentPrice") val currentPrice: Double,
     @SerializedName("cost") val cost: Double,
     @SerializedName("image") val image: String,
-    @SerializedName("startPrice") val startPrice: Double,
-    @SerializedName("endPrice") val endPrice: Double
 
     )

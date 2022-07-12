@@ -95,8 +95,6 @@ class UpdateProductFragment : Fragment() {
         binding?.nameInput?.setText(product.title)
         binding?.descriptionInput?.setText(product.description)
         binding?.costInput?.setText(product.cost.toString())
-        binding?.startPriceInput?.setText(product.startPrice.toString())
-        binding?.endPriceInput?.setText(product.endPrice.toString())
     }
 
     private fun observe() {
@@ -149,17 +147,12 @@ class UpdateProductFragment : Fragment() {
 
         val description = binding?.descriptionInput?.text.toString().trim()
         val cost = binding?.costInput?.text.toString().trim().toDoubleOrNull()
-        val startPrice = binding?.startPriceInput?.text.toString().trim().toDoubleOrNull()
-        val endPrice = binding?.endPriceInput?.text.toString().trim().toDoubleOrNull()
-
         if (validate(
                 title,
                 categoryValue,
                 brandValue,
                 description,
-                cost,
-                startPrice,
-                endPrice
+                cost
             ) and dropdownValid
         ) {
             if (getFile !== null) {
@@ -174,7 +167,7 @@ class UpdateProductFragment : Fragment() {
                                 product.id,
                                 ProductUpdateRequest(
                                     title, description, brandId!!, categoryId!!,
-                                    cost!!, it, startPrice!!, endPrice!!
+                                    cost!!, it
                                 )
                             )
                         }
@@ -185,7 +178,7 @@ class UpdateProductFragment : Fragment() {
                     product.id,
                     ProductUpdateRequest(
                         title, description, brandId!!, categoryId!!,
-                        cost!!, product.image, startPrice!!, endPrice!!
+                        cost!!, product.image
                     )
                 )
             }
@@ -197,9 +190,7 @@ class UpdateProductFragment : Fragment() {
         categoryValue: String,
         brandValue: String,
         description: String,
-        cost: Double?,
-        startPrice: Double?,
-        endPrice: Double?
+        cost: Double?
     ): Boolean {
         // reset all error
         binding?.nameInput?.error = null
@@ -207,8 +198,6 @@ class UpdateProductFragment : Fragment() {
         binding?.brandInput?.error = null
         binding?.descriptionInput?.error = null
         binding?.costInput?.error = null
-        binding?.startPriceInput?.error = null
-        binding?.endPriceInput?.error = null
         binding?.imageErrorLabel?.invisible()
 
         if (title.isEmpty()) {
@@ -229,14 +218,6 @@ class UpdateProductFragment : Fragment() {
         }
         if (cost == null) {
             binding?.costInput?.error = "Cost is required."
-            return false
-        }
-        if (startPrice == null) {
-            binding?.startPriceInput?.error = "Start price is required."
-            return false
-        }
-        if (endPrice == null) {
-            binding?.endPriceInput?.error = "End price is required."
             return false
         }
 

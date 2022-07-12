@@ -1,7 +1,9 @@
 package com.bangkit.hargain.presentation.main.mainmenu.mainsearch
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -17,7 +19,6 @@ import com.bangkit.hargain.databinding.FragmentMainSearchBinding
 import com.bangkit.hargain.domain.category.entity.CategoryEntity
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
-import com.bangkit.hargain.presentation.common.extension.invisible
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -111,30 +112,25 @@ class MainSearchFragment : Fragment()  {
         }
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Choose Category")
-            .setNeutralButton("Cancel") { dialog, which ->
+            .setNeutralButton("Cancel") { _, _ ->
                 // Respond to neutral button press
             }
-            .setPositiveButton("Ok") { dialog, which ->
-                if (categoriesValueArray[checkedCategoryIndex] == "Default") {
-                    categoryIdQuery = ""
+            .setPositiveButton("Ok") { _, _ ->
+                categoryIdQuery = if (categoriesValueArray[checkedCategoryIndex] == "Default") {
+                    ""
                 } else {
-                    val categoryIdFilter = categoriesOriginal.filter {
+                    val categoryIdFilter = categoriesOriginal.firstOrNull {
                         it.name == categoriesValueArray[checkedCategoryIndex]
-                    }.firstOrNull()?.categoryId
-                    categoryIdQuery = categoryIdFilter ?: ""
+                    }?.categoryId
+                    categoryIdFilter ?: ""
                 }
 
                 viewModel.searchProducts(searchQuery, categoryIdQuery)
             }
-            .setSingleChoiceItems(categoriesValueArray, checkedCategoryIndex) { dialog, which ->
-                context?.showToast(checkedCategoryIndex.toString())
+            .setSingleChoiceItems(categoriesValueArray, checkedCategoryIndex) { _, which ->
                 checkedCategoryIndex = which
             }
             .show()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun observe() {

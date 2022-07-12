@@ -9,54 +9,55 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        >
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="60dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewProduct"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="60dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/product_row" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
-        <LinearLayout
-            android:id="@+id/searchFilterLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            >
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/SearchViewProduct"
-                android:background="@drawable/bg_searchview"
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProduct"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                />
+                android:layout_marginTop="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/product_row" />
 
-            <ImageButton
-                android:id="@+id/filterButton"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/searchFilterLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:backgroundTint="@color/material_on_primary_emphasis_medium"
-                android:src="@drawable/ic_baseline_filter_list_24" />
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </LinearLayout>
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/SearchViewProduct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.9"
+                    android:background="@drawable/bg_searchview" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageButton
+                    android:id="@+id/filterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_baseline_filter_list_24" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
@@ -64,11 +65,10 @@
         android:id="@+id/notFoundTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="Product not found"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:visibility="gone"
-        />
+        android:text="@string/product_not_found"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -88,10 +88,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="70dp"
         android:contentDescription="@string/add_product"
-        android:backgroundTint="@color/primary_30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_white_24" />

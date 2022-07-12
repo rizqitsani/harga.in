@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getBottomNav(): BottomNavigationView {
-        return binding?.bottomNavigationMenu
+        return binding.bottomNavigationMenu
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Environment
 import com.bangkit.hargain.R
 import java.io.*
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -96,4 +97,8 @@ fun reduceFileImage(file: File): File {
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
 
     return file
+}
+
+fun formatCurrency(number: Double): String {
+    return NumberFormat.getNumberInstance(Locale.US).format(number)
 }

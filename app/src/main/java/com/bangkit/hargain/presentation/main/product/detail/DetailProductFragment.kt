@@ -1,6 +1,5 @@
 package com.bangkit.hargain.presentation.main.product.detail
 
-import CustomMarker
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +13,14 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.hargain.R
+import com.bangkit.hargain.presentation.customLayout.CustomMarker
 import com.bangkit.hargain.data.product.remote.dto.PricePrediction
 import com.bangkit.hargain.databinding.FragmentDetailProductBinding
 import com.bangkit.hargain.domain.product.entity.ProductEntity
 import com.bangkit.hargain.presentation.common.extension.gone
 import com.bangkit.hargain.presentation.common.extension.showToast
 import com.bangkit.hargain.presentation.common.extension.visible
+import com.bangkit.hargain.presentation.common.helper.formatCurrency
 import com.bangkit.hargain.presentation.main.MainActivity
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.animation.Easing
@@ -120,10 +121,11 @@ class DetailProductFragment : Fragment() {
         }
 
         binding?.productName?.text = product.title
-        binding?.price?.text = product.currentPrice.toString()
+        binding?.price?.text = resources.getString(R.string.product_price, formatCurrency(product.optimalPrice))
         binding?.tvKategori?.text = product.categoryName
         binding?.tvDescription?.text = product.description
         binding?.tvMerk?.text = product.brandName
+        binding?.tvCurrentPrice?.text = resources.getString(R.string.product_price, formatCurrency(product. currentPrice))
 
         setupSalesPredictionChart(product.pricePredictions)
         setupProfitPredictionChart(product.pricePredictions)
@@ -136,12 +138,12 @@ class DetailProductFragment : Fragment() {
         val lineChart: LineChart = binding!!.lineChartSales
 
         //Part2
-        pricePredictions.forEach { it ->
+        pricePredictions.forEach {
             entries.add(Entry(it.sellingPrice.toFloat(), it.totalSales.toFloat()))
         }
 
         //Part3
-        val vl = LineDataSet(entries, "Total Sales")
+        val vl = LineDataSet(entries, getString(R.string.total_sales))
 
         //Part4
         vl.setDrawValues(false)
@@ -168,8 +170,8 @@ class DetailProductFragment : Fragment() {
         lineChart.setPinchZoom(true)
 
         //Part9
-        lineChart.description.text = "Selling Price"
-        lineChart.setNoDataText("No prediction yet.")
+        lineChart.description.text = getString(R.string.selling_price)
+        lineChart.setNoDataText(getString(R.string.no_prediction_yet))
 
         //Part10
         lineChart.animateX(1800, Easing.EaseInExpo)
@@ -185,12 +187,12 @@ class DetailProductFragment : Fragment() {
         val lineChart: LineChart = binding!!.lineChartProfit
 
         //Part2
-        pricePredictions.forEach { it ->
+        pricePredictions.forEach {
             entries.add(Entry(it.sellingPrice.toFloat(), it.totalProfit.toFloat()))
         }
 
         //Part3
-        val vl = LineDataSet(entries, "Total Profit (in Rupiah)")
+        val vl = LineDataSet(entries, getString(R.string.total_profit))
 
         //Part4
         vl.setDrawValues(false)
@@ -217,8 +219,8 @@ class DetailProductFragment : Fragment() {
         lineChart.setPinchZoom(true)
 
         //Part9
-        lineChart.description.text = "Selling Price"
-        lineChart.setNoDataText("No prediction yet.")
+        lineChart.description.text = getString(R.string.selling_price)
+        lineChart.setNoDataText(getString(R.string.no_prediction_yet))
 
         //Part10
         lineChart.animateX(1800, Easing.EaseInExpo)
